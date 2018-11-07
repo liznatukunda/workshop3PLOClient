@@ -116,7 +116,7 @@
         <!--------------------------------------------------------------------------------------------------VIEW klanten -->
         <script type="text/javascript">
             $(document).ready(function () {
-             var tableklant = $('#klanten').DataTable({
+                var tableklant = $('#klanten').DataTable({
                     "pagingType": "full_numbers",
                     "lengthMenu": [[3, 5, 10, -1], [3, 5, 10, "All"]],
                     "scrollY": "400px",
@@ -136,7 +136,7 @@
                         {title: "Tussenvoegsel", data: "tussenvoegsel", className: 'dt-body-center'},
                         {title: "Voornaam", data: "voornaam", className: 'dt-body-center'},
                         {title: "Account Id", data: "accountId.id", className: 'dt-body-center'},
-                     {title: "Edit", data: null,
+                        {title: "Edit", data: null,
                             render: function (data, type, full) {
                                 return '<a class="btn btn-info btn-sm" href=#/' + data + '>' + 'Edit' + '</a>';
 //                            return '<a class="btn btn-info btn-sm" href=#/' + data + '>' + 'Edit' + '</a>' + "  " + '<a class="btn btn-info btn-sm" href=#/' + data + '>' + 'Delete' + '</a>';
@@ -161,9 +161,9 @@
 
 
 
-               
-            
-        });
+
+
+            });
         </script>
         <!----------------------------------------------------------------------------------------------VIEW bestellingen -->
         <script type="text/javascript">
@@ -321,6 +321,7 @@
 
                 <script>
                     function openAddAccountForm() {
+                         document.getElementById("accountform").reset();
                         document.getElementById("addAccountForm").style.display = "block";
                     }
 
@@ -495,6 +496,7 @@
 
                     <script>
                         function openAddForm() {
+                             document.getElementById("artikelform").reset();
                             document.getElementById("addArtikelForm").style.display = "block";
                         }
 
@@ -672,25 +674,40 @@
                             <label for="achternaam" ><b>Achternaam</b></label>
                             <input id="achternaam" type="text" placeholder="voer achternaam in" name="achternaam" required>
 
-<!--                            To be selected from already existing accounts-->
-                            <label for="accountId" ><b>Account Id</b></label>
-                            <input id="accountIdklant" type="number" placeholder="" name="accountId" required>
+                            <!--                            To be selected from already existing accounts-->
+                            <label for="account" ><b>Account</b></label>
+                            <select id="accountselect"></select>
 
-
-                            <button type="button" class="btn" onclick="saveKlantForm(document.getElementById('voornaam').value, document.getElementById('tussenvoegsel').value, document.getElementById('achternaam').value, document.getElementById('accountIdklant').value)">save</button>
+                            <button type="button" class="btn" onclick="saveKlantForm(document.getElementById('voornaam').value, document.getElementById('tussenvoegsel').value, document.getElementById('achternaam').value, document.getElementById('accountselect').value)">save</button>
                             <button type="button" class="btn cancel" onclick="closeAddKlantForm()">Close</button>
                         </form>
                     </div>
 
                     <script>
                         function openAddKlantForm() {
+
+                            $.ajax({
+                                type: 'GET',
+                                contentType: 'application/json',
+                                url: 'http://localhost:8080/workshop3LO/webresources/account',
+                                dataType: "json",
+
+                                success: function (data, textStatus, jqXHR) {
+                                                  
+                                    var select = document.getElementById("accountselect");
+                                    for (index in data) {
+                                        select.options[select.options.length] = new Option(data[index].id);
+                                    }
+
+                                }});
+                            document.getElementById("klantform").reset();
                             document.getElementById("addKlantForm").style.display = "block";
                         }
 
                         function closeAddKlantForm() {
                             document.getElementById("addKlantForm").style.display = "none";
                         }
-                        function saveKlantForm(voornaam, tussenvoegsel, achternaam,accountId) {
+                        function saveKlantForm(voornaam, tussenvoegsel, achternaam, account) {
 
                             $.ajax({
                                 type: 'POST',
@@ -698,14 +715,14 @@
                                 url: 'http://localhost:8080/workshop3LO/webresources/klant',
                                 dataType: "json",
                                 data: JSON.stringify({
-                                    "accountId": accountId,
+                                    "accountId": {"id": account},
                                     "achternaam": achternaam,
                                     "id": null,
                                     "tussenvoegsel": tussenvoegsel,
                                     "voornaam": voornaam
-                                    
-                                    
-                                    
+
+
+
 
 
 
@@ -743,7 +760,7 @@
                             <label for="accountId" ><b>Account Id</b></label>
                             <input id="klanteditaccountId" type="number" placeholder="" name="accountId" required>
 
-                            <button type="button" class="btn" onclick="editKlantForm(document.getElementById('klanteditid').value, document.getElementById('klanteditvoornaam').value, document.getElementById('klantedittussenvoegsel').value, document.getElementById('klanteditachternaam').value,document.getElementById('klanteditaccountId').value)">save</button>
+                            <button type="button" class="btn" onclick="editKlantForm(document.getElementById('klanteditid').value, document.getElementById('klanteditvoornaam').value, document.getElementById('klantedittussenvoegsel').value, document.getElementById('klanteditachternaam').value, document.getElementById('klanteditaccountId').value)">save</button>
                             <button type="button" class="btn cancel" onclick="closeKlantEditForm()">Close</button>
                         </form>
                     </div>
@@ -755,14 +772,14 @@
                             $('#klanteditvoornaam').attr('value', data.voornaam.valueOf());
                             $('#klantedittussenvoegsel').attr('value', data.tussenvoegsel.valueOf());
                             $('#klanteditachternaam').attr('value', data.achternaam.valueOf());
-                            $('#klanteditaccountId').attr('value', data.accountId.valueOf());
+                            $('#klanteditaccountId').attr('value', data.accountId.id.valueOf());
                             document.getElementById("EditDeleteKlantForm").style.display = "block";
                         }
 
                         function closeKlantEditForm() {
                             document.getElementById("EditDeleteKlantForm").style.display = "none";
                         }
-                        function editKlantForm(id, voornaam, tussenvoegsel, achternaam,accountId) {
+                        function editKlantForm(id, voornaam, tussenvoegsel, achternaam, accountId) {
 
                             $.ajax({
                                 type: 'PUT',
@@ -770,11 +787,11 @@
                                 url: 'http://localhost:8080/workshop3LO/webresources/klant/' + id,
                                 dataType: "json",
                                 data: JSON.stringify({
-                                     "id": id,                                 
+                                    "accountId": {"id": accountId},
+                                    "id": id,
                                     "voornaam": voornaam,
                                     "tussenvoegsel": tussenvoegsel,
-                                    "achternaam": achternaam,
-                                    "accountId": accountId
+                                    "achternaam": achternaam
 
                                 }),
                                 success: function (data, textStatus, jqXHR) {
