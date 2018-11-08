@@ -169,7 +169,7 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
-                $('#bestelling').dataTable({
+                var tablebestelling = $('#bestelling').DataTable({
                     "pagingType": "full_numbers",
                     "lengthMenu": [[3, 5, 10, -1], [3, 5, 10, "All"]],
                     "scrollY": "400px",
@@ -189,10 +189,34 @@
                         {title: "klant", data: null,
                             "render": function (data, type, row) {
                                 return data.klantidKlant.voornaam + ' ' + data.klantidKlant.tussenvoegsel + ' ' + data.klantidKlant.achternaam;
-                            }}
-                    ]
-
+                            }},
+                        {title: "Edit", data: null,
+                            render: function (data, type, full) {
+                                return '<a class="btn btn-info btn-sm" href=#/' + data + '>' + 'Edit' + '</a>';
+//                            return '<a class="btn btn-info btn-sm" href=#/' + data + '>' + 'Edit' + '</a>' + "  " + '<a class="btn btn-info btn-sm" href=#/' + data + '>' + 'Delete' + '</a>';
+//                           return new array('<a class="btn btn-info btn-sm" href=#/' + full[0] + '>' + 'Edit' + '</a>', '<a class="btn btn-info btn-sm" href=#/' + full[0] + '>' + 'Delete' + '</a>');             
+                            }},
+                        {title: "Delete", data: null,
+                            render: function (data, type, full) {
+                                return '<b class="btn btn-info btn-sm" href=#/' + data + '>' + 'Delete' + '</b>';
+                            }
+                        }]
                 });
+                $("#bestelling").on("click", 'a', function () {
+                    var data1 = tablebestelling.row($(this).parents('tr')).data();
+                    var table = $('#bestelregel').dataTable();
+                    table.api().ajax.url('http://localhost:8080/workshop3LO/webresources/bestelregel/search/' + data1.id).load();
+                    document.getElementById('BestelRegel').scrollIntoView();
+                });
+
+                $("#bestelling").on("click", 'b', function () {
+                    var data1 = tablebestelling.row($(this).parents('tr')).data();
+                    deleteBestelling(data1);
+                });
+
+
+
+
             });
         </script>
         <!--------------------------------------------------------------------------------------------------VIEW bestelregel -->
@@ -321,7 +345,7 @@
 
                 <script>
                     function openAddAccountForm() {
-                         document.getElementById("accountform").reset();
+                        document.getElementById("accountform").reset();
                         document.getElementById("addAccountForm").style.display = "block";
                     }
 
@@ -346,7 +370,7 @@
                             }),
                             success: function (data, textStatus, jqXHR) {
                                 alert('Account created successfully');
-                                
+
                                 var table = $('#accounts').dataTable();
                                 table.api().ajax.reload();
                             }});
@@ -435,9 +459,9 @@
                                 success: function (data, textStatus, jqXHR) {
                                     alert('Account deleted successfully');
                                     var table = $('#accounts').dataTable();
-                                table.api().ajax.reload();
-                                        }});
-                                    
+                                    table.api().ajax.reload();
+                                }});
+
                         } else {
                             alert("User does not want to continue!");
 
@@ -491,7 +515,7 @@
 
                     <script>
                         function openAddForm() {
-                             document.getElementById("artikelform").reset();
+                            document.getElementById("artikelform").reset();
                             document.getElementById("addArtikelForm").style.display = "block";
                         }
 
@@ -514,10 +538,10 @@
                                 }),
                                 success: function (data, textStatus, jqXHR) {
                                     alert('Artikel created successfully');
-                                  
+
                                     var table = $('#artikel').dataTable();
-                                table.api().ajax.reload();
-                            }});
+                                    table.api().ajax.reload();
+                                }});
                             closeAddForm();
                         }
                     </script>
@@ -576,8 +600,8 @@
                                 success: function (data, textStatus, jqXHR) {
                                     alert('Artikel has been updated');
                                     var table = $('#artikel').dataTable();
-                                table.api().ajax.reload();
-                            }});
+                                    table.api().ajax.reload();
+                                }});
                             closeEditArtikelForm();
                         }
                     </script>
@@ -605,9 +629,9 @@
                                     success: function (data, textStatus, jqXHR) {
                                         alert('Artikel deleted successfully');
                                         var table = $('#artikel').dataTable();
-                                table.api().ajax.reload();
-                                        }});
-                                    
+                                        table.api().ajax.reload();
+                                    }});
+
                             } else {
                                 alert("User does not want to continue!");
 
@@ -683,7 +707,7 @@
                                 dataType: "json",
 
                                 success: function (data, textStatus, jqXHR) {
-                                                  
+
                                     var select = document.getElementById("accountselect");
                                     for (index in data) {
                                         select.options[select.options.length] = new Option(data[index].id);
@@ -719,10 +743,10 @@
                                 }),
                                 success: function (data, textStatus, jqXHR) {
                                     alert('Klant created successfully');
-                                
+
                                     var table = $('#klanten').dataTable();
-                                table.api().ajax.reload();
-                            }});
+                                    table.api().ajax.reload();
+                                }});
                             closeAddKlantForm();
                         }
                     </script>
@@ -785,8 +809,8 @@
                                 success: function (data, textStatus, jqXHR) {
                                     alert('Klant has been updated');
                                     var table = $('#klanten').dataTable();
-                                table.api().ajax.reload();
-                            }});
+                                    table.api().ajax.reload();
+                                }});
                             closeKlantEditForm();
                         }
                     </script>
@@ -813,9 +837,9 @@
                                     success: function (data, textStatus, jqXHR) {
                                         alert('Klant deleted successfully');
                                         var table = $('#klanten').dataTable();
-                                table.api().ajax.reload();
-                                        }});
-                                    
+                                        table.api().ajax.reload();
+                                    }});
+
                             } else {
                                 alert("User does not want to continue!");
 
@@ -859,7 +883,7 @@
                 </div>
             </div>
 
-            <!-- Container (Pricing Section) -->
+            <!-- Container (bestelling Section) -->
             <div id="Bestelling" class="container-fluid">
                 <div class="text-center">
                     <h2>Bestellingen</h2>
@@ -867,98 +891,469 @@
                 </div>
                 <div class="header">
 
-                    <button id="btnAdd">Add New </button>
-                    <button id="btnEdit">Edit</button>
-                    <button id="btnDelete">Delete</button>
+                    <button id="btnAdd" onclick="openAddBestellingForm()">Add New </button>
                     <table id="bestelling" class="display" width="100%">
 
                     </table>
                 </div>
-            </div>
 
-            <!-- Container (Contact Section) -->
-            <div id="BestelRegel" class="container-fluid bg-grey">
-                <h2 class="text-center">Bestelregels</h2>
-                <div class="header">
+                <!---------------------------------------------------------------------------------ADD Bestellingen form   -->
 
-                    <button id="btnAdd">Add New </button>
-                    <button id="btnEdit">Edit</button>
-                    <button id="btnDelete">Delete</button>
-                    <table id="bestelregel" class="display" width="100%">
+                <div id = "bestellingAddpopup">
+                    <div class="form-popup" id="addBestellingForm">
+                        <form  id="bestellingform" class="form-container" >
+                            <h1>Voeg bestelling toe</h1>
 
-                    </table>
-                </div>
-            </div>
-            <!-- Container (Contact Section) -->
-            <div id="contact" class="container-fluid bg-grey">
-                <h2 class="text-center">CONTACT</h2>
-                <div class="row">
-                    <div class="col-sm-5">
-                        <p>Contact us and we'll get back to you within 24 hours.</p>
-                        <p><span class="glyphicon glyphicon-map-marker"></span> Lutjebroek, NL</p>
-                        <p><span class="glyphicon glyphicon-phone"></span> +31 1515151515</p>
-                        <p><span class="glyphicon glyphicon-envelope"></span> boer@piet.nl</p>
+                            <label for="totaalprijs" ><b>Totaal prijs</b></label>
+                            <input id="totaalprijs" type="number" placeholder="" value="0" name="totaalprijs"  disabled>
+
+                            <label for="klantid" ><b>Klant Id</b></label>
+                            <select id="bestelingselectklant"></select>
+
+                            <button type="button" class="btn" onclick="saveBestellingForm(document.getElementById('totaalprijs').value, document.getElementById('bestelingselectklant').value)">save</button>
+                            <button type="button" class="btn cancel" onclick="closeAddBestellingForm()">Close</button>
+                        </form>
                     </div>
-                    <div class="col-sm-7 slideanim">
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
-                            </div>
-                        </div>
-                        <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
-                        <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <button class="btn btn-default pull-right" type="submit">Send</button>
-                            </div>
-                        </div>
-                    </div>
+
+                    <script>
+                        function openAddBestellingForm() {
+
+                            $.ajax({
+                                type: 'GET',
+                                contentType: 'application/json',
+                                url: 'http://localhost:8080/workshop3LO/webresources/klant',
+                                dataType: "json",
+
+                                success: function (data, textStatus, jqXHR) {
+
+                                    var selectBestelling = document.getElementById("bestelingselectklant");
+                                    for (index in data) {
+                                        selectBestelling.options[selectBestelling.options.length] = new Option(data[index].id);
+                                    }
+
+                                }});
+                            document.getElementById("bestellingform").reset();
+                            document.getElementById("addBestellingForm").style.display = "block";
+                        }
+
+                        function closeAddBestellingForm() {
+                            document.getElementById("addBestellingForm").style.display = "none";
+                        }
+                        function saveBestellingForm(totaalprijs, klantid) {
+
+                            $.ajax({
+                                type: 'POST',
+                                contentType: 'application/json',
+                                url: 'http://localhost:8080/workshop3LO/webresources/bestelling',
+                                dataType: "json",
+                                data: JSON.stringify({
+                                    "id": null,
+                                    "klantidKlant": {"id": klantid},
+                                    "prijs": totaalprijs
+
+
+                                }),
+                                success: function (data, textStatus, jqXHR) {
+                                    alert('Bestelling created successfully');
+
+                                    var table = $('#bestelling').dataTable();
+                                    table.api().ajax.reload();
+                                }});
+                            closeAddBestellingForm();
+                        }
+                    </script>
                 </div>
+
+                <!---------------------------------------------------------------------------------------DELETE BESTELLING -->
+                <script>
+
+                    function deleteBestelling(data) {
+
+
+                        var retVal = confirm("Do you want to continue ?");
+                        if (retVal === true) {
+                            $.ajax({
+                                type: 'DELETE',
+                                contentType: 'application/json',
+                                url: 'http://localhost:8080/workshop3LO/webresources/bestelling/' + data.id.valueOf(),
+                                dataType: "json"
+                                        //                                        data: JSON.stringify({
+                                        //                                            "id": data.id.valueOf()
+                                        //                                            "naam": naam,
+                                        //                                            "prijs": prijs,
+                                        //                                            "voorraad": voorraad
+
+                                ,
+                                success: function (data, textStatus, jqXHR) {
+                                    alert('bestelling deleted successfully');
+                                    var table = $('#bestelling').dataTable();
+                                    table.api().ajax.reload();
+                                }});
+
+                        } else {
+                            alert("User does not want to continue!");
+
+                        }
+
+                    }
+                </script>
             </div>
 
+            <h2>What our customers say</h2>
+            <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
 
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <h4>"This company is the best. I am so happy with the result!"<br><span>Rob Sleutel, Directeur, RS4</span></h4>
+                    </div>
+                    <div class="item">
+                        <h4>"One word... WOW!!"<br><span>Henk Keizer, Klant, RS4</span></h4>
+                    </div>
+                    <div class="item">
+                        <h4>"Could I... BE any more happy with this company?"<br><span>Volkan, Programmer, RS4</span></h4>
+                    </div>
+                </div>
 
-            <footer class="container-fluid text-center">
-                <a href="#mainPage" title="To Top">
-                    <span class="glyphicon glyphicon-chevron-up"></span>
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
                 </a>
-                <p> Made By LOP@RS4</p>
-            </footer>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
 
-            <script>
-                $(document).ready(function () {
-                    // Add smooth scrolling to all links in navbar + footer link
-                    $(".navbar a, footer a[href='#mainPage']").on('click', function (event) {
-                        // Make sure this.hash has a value before overriding default behavior
-                        if (this.hash !== "") {
-                            // Prevent default anchor click behavior
-                            event.preventDefault();
-                            // Store hash
-                            var hash = this.hash;
-                            // Using jQuery's animate() method to add smooth page scroll
-                            // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-                            $('html, body').animate({
-                                scrollTop: $(hash).offset().top
-                            }, 900, function () {
+        </div>
 
-                                // Add hash (#) to URL when done scrolling (default click behavior)
-                                window.location.hash = hash;
-                            });
-                        } // End if
-                    });
-                    $(window).scroll(function () {
-                        $(".slideanim").each(function () {
-                            var pos = $(this).offset().top;
-                            var winTop = $(window).scrollTop();
-                            if (pos < winTop + 600) {
-                                $(this).addClass("slide");
-                            }
+        <!-- Container (bestelregel Section) -->
+        <div id="BestelRegel" class="container-fluid bg-grey">
+            <h2 class="text-center">Bestelregels</h2>
+            <div class="header">
+
+                <button id="btnAdd" onclick="openAddBestelregelForm()">Add New </button>
+
+                <table id="bestelregel" class="display" width="100%">
+
+                </table>
+            </div>
+            <!---------------------------------------------------------------------------------ADD bestelregel form   -->
+
+            <div id = "bestelregelAddpopup">
+                <div class="form-popup" id="addBestelregelForm">
+                    <form  id="bestelregelform" class="form-container" >
+                        <h1>Voeg bestelregel toe</h1>
+
+                        <label for="aantal" ><b>Aantal</b></label>
+                        <input id="aantal" type="number" placeholder="voer aantal in" name="aantal" required>
+
+                        <label for="artikel" ><b>Artikel</b></label>
+                        <select id="artikelselect"></select>
+
+                        <label for="bestellingId" ><b>Bestelling</b></label>
+                        <select id="bestellingIdselect"></select>
+
+                        <button type="button" class="btn" onclick="saveBestelRegelForm(document.getElementById('aantal').value, document.getElementById('artikelselect').value, document.getElementById('bestellingIdselect').value)">save</button>
+                        <button type="button" class="btn cancel" onclick="closeAddBestelregelForm()">Close</button>
+                    </form>
+                </div>
+
+                <script>
+                    function openAddBestelregelForm() {
+
+                        $.ajax({
+                            type: 'GET',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/artikel',
+                            dataType: "json",
+
+                            success: function (data, textStatus, jqXHR) {
+
+                                var select = document.getElementById("artikelselect");
+                                
+                                for (index in data) {
+                                    select.options[select.options.length] = new Option(data[index].id + ' euro: '+data[index].prijs + ' ' + data[index].naam);
+                                }
+
+                            }});
+                        $.ajax({
+                            type: 'GET',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/bestelling',
+                            dataType: "json",
+
+                            success: function (data, textStatus, jqXHR) {
+
+                                var select = document.getElementById("bestellingIdselect");
+                                for (index in data) {
+                                    select.options[select.options.length] = new Option(data[index].id);
+                                }
+                                  
+                            }});
+
+                        document.getElementById("bestelregelform").reset();
+                        document.getElementById("addBestelregelForm").style.display = "block";
+                    }
+
+                    function closeAddBestelregelForm() {
+                        document.getElementById("addBestelregelForm").style.display = "none";
+                    }
+                    function saveBestelRegelForm(aantal, artikel, bestellingId) {
+                       
+                        var res = artikel.split(" ");
+                        var artikelid = res[0];
+                        var prijs = res[2]*aantal;
+                        $.ajax({
+                            type: 'POST',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/bestelregel',
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "aantal": aantal,
+                                "artikelidArtikel": {"id": artikelid},
+                                "bestellingidBestelling": {"id": bestellingId},
+                                "id": null,
+                                "prijs": prijs
+
+
+
+
+
+
+
+
+                            }),
+                            success: function (data, textStatus, jqXHR) {
+                                alert('bestelregel created successfully');
+
+                                var table = $('#bestelregel').dataTable();
+                                table.api().ajax.reload();
+                                updateBestellingTotaalPrijs(bestellingId);
+                            }});
+                        closeAddBestelregelForm();
+                    }
+                </script>
+                <script>
+                    function  updateBestellingTotaalPrijs(bestellingId){
+                        $.ajax({
+                        "url": 'http://localhost:8080/workshop3LO/webresources/bestelregel/search/' + bestellingId ,
+                        "type": 'GET',
+                        "cache": false,
+                        "dataType": 'json',
+                        "dataSrc": ""
+
+
+                    ,
+                            success: function (data, textStatus, jqXHR) {
+                                var totaalprijs=0;
+                                  for (var i = 0; i < data.length; i++) {
+                                        totaalprijs += data[i].prijs;
+  
+                                    }
+                                    
+                                    var klantid =data[0].bestellingidBestelling.klantidKlant.id.valueOf();
+                                $.ajax({
+                                type: 'PUT',
+                                contentType: 'application/json',
+                                url: 'http://localhost:8080/workshop3LO/webresources/bestelling/' + bestellingId,
+                                dataType: "json",
+                                data: JSON.stringify({
+                                    "id": bestellingId,
+                                    "klantidKlant": {"id": klantid},
+                                    "prijs": totaalprijs
+
+
+                                }),
+                                success: function (data, textStatus, jqXHR) {
+                                    alert('bestelling has been updated');
+                                    var table = $('#bestelling').dataTable();
+                                    table.api().ajax.reload();
+                                }});
+                            
+                    }});}
+                    </script>
+            </div>
+            <!----------------------------------------------------------------------------------EDIT  bestelregel -->
+            
+            
+            
+            <!--------todo------>
+            <div id = "klantEditDeletepopup">
+                <div class="form-popup" id="EditDeleteKlantForm">
+                    <form  id="klantfrm2" class="form-container" >
+                        <h1>Voeg Klant toe</h1>
+
+                        <label for="id" ><b>Id</b></label>
+                        <input id="klanteditid" type="number" placeholder="" name="id" required value="" disabled="" >
+
+                        <label for="voornaam" ><b>Voornaam</b></label>
+                        <input id="klanteditvoornaam" type="text" placeholder="voer voornaam in" name="voornaam" required>
+
+                        <label for="tussenvoegsel" ><b>Tussenvoegsel</b></label>
+                        <input id="klantedittussenvoegsel" type="text" placeholder="voer tussenvoegsel in" name="tussenvoegsel">
+
+                        <label for="achternaam" ><b>Achternaam</b></label>
+                        <input id="klanteditachternaam" type="text" placeholder="voer achternaam in" name="achternaam" required>
+
+                        <label for="accountId" ><b>Account Id</b></label>
+                        <input id="klanteditaccountId" type="number" placeholder="" name="accountId" required>
+
+                        <button type="button" class="btn" onclick="editKlantForm(document.getElementById('klanteditid').value, document.getElementById('klanteditvoornaam').value, document.getElementById('klantedittussenvoegsel').value, document.getElementById('klanteditachternaam').value, document.getElementById('klanteditaccountId').value)">save</button>
+                        <button type="button" class="btn cancel" onclick="closeKlantEditForm()">Close</button>
+                    </form>
+                </div>
+
+                <script>
+                    function openKlantEditForm(data) {
+                        document.getElementById("klantfrm2").reset();
+                        $('#klanteditid').attr('value', data.id.valueOf());
+                        $('#klanteditvoornaam').attr('value', data.voornaam.valueOf());
+                        $('#klantedittussenvoegsel').attr('value', data.tussenvoegsel.valueOf());
+                        $('#klanteditachternaam').attr('value', data.achternaam.valueOf());
+                        $('#klanteditaccountId').attr('value', data.accountId.id.valueOf());
+                        document.getElementById("EditDeleteKlantForm").style.display = "block";
+                    }
+
+                    function closeKlantEditForm() {
+                        document.getElementById("EditDeleteKlantForm").style.display = "none";
+                    }
+                    function editKlantForm(id, voornaam, tussenvoegsel, achternaam, accountId) {
+
+                        $.ajax({
+                            type: 'PUT',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/klant/' + id,
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "accountId": {"id": accountId},
+                                "id": id,
+                                "voornaam": voornaam,
+                                "tussenvoegsel": tussenvoegsel,
+                                "achternaam": achternaam
+
+                            }),
+                            success: function (data, textStatus, jqXHR) {
+                                alert('Klant has been updated');
+                                var table = $('#klanten').dataTable();
+                                table.api().ajax.reload();
+                            }});
+                        closeKlantEditForm();
+                    }
+                </script>
+                <!---------------------------------------------------------------------------------------DELETE klant -->
+                <script>
+
+                    function deleteKlant(data) {
+
+
+                        var retVal = confirm("Do you want to continue ?");
+                        if (retVal === true) {
+                            $.ajax({
+                                type: 'DELETE',
+                                contentType: 'application/json',
+                                url: 'http://localhost:8080/workshop3LO/webresources/klant/' + data.id.valueOf(),
+                                dataType: "json"
+                                        //                                        data: JSON.stringify({
+                                        //                                            "id": data.id.valueOf()
+                                        //                                            "naam": naam,
+                                        //                                            "prijs": prijs,
+                                        //                                            "voorraad": voorraad
+
+                                ,
+                                success: function (data, textStatus, jqXHR) {
+                                    alert('Klant deleted successfully');
+                                    var table = $('#klanten').dataTable();
+                                    table.api().ajax.reload();
+                                }});
+
+                        } else {
+                            alert("User does not want to continue!");
+
+                        }
+
+                    }
+                </script>
+            </div>
+
+        </div>
+        <!-- Container (Contact Section) -->
+        <div id="contact" class="container-fluid bg-grey">
+            <h2 class="text-center">CONTACT</h2>
+            <div class="row">
+                <div class="col-sm-5">
+                    <p>Contact us and we'll get back to you within 24 hours.</p>
+                    <p><span class="glyphicon glyphicon-map-marker"></span> Lutjebroek, NL</p>
+                    <p><span class="glyphicon glyphicon-phone"></span> +31 1515151515</p>
+                    <p><span class="glyphicon glyphicon-envelope"></span> boer@piet.nl</p>
+                </div>
+                <div class="col-sm-7 slideanim">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                        </div>
+                    </div>
+                    <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <button class="btn btn-default pull-right" type="submit">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <footer class="container-fluid text-center">
+            <a href="#mainPage" title="To Top">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+            <p> Made By LOP@RS4</p>
+        </footer>
+
+        <script>
+            $(document).ready(function () {
+                // Add smooth scrolling to all links in navbar + footer link
+                $(".navbar a, footer a[href='#mainPage']").on('click', function (event) {
+                    // Make sure this.hash has a value before overriding default behavior
+                    if (this.hash !== "") {
+                        // Prevent default anchor click behavior
+                        event.preventDefault();
+                        // Store hash
+                        var hash = this.hash;
+                        // Using jQuery's animate() method to add smooth page scroll
+                        // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+                        $('html, body').animate({
+                            scrollTop: $(hash).offset().top
+                        }, 900, function () {
+
+                            // Add hash (#) to URL when done scrolling (default click behavior)
+                            window.location.hash = hash;
                         });
+                    } // End if
+                });
+                $(window).scroll(function () {
+                    $(".slideanim").each(function () {
+                        var pos = $(this).offset().top;
+                        var winTop = $(window).scrollTop();
+                        if (pos < winTop + 600) {
+                            $(this).addClass("slide");
+                        }
                     });
-                })
-            </script>
+                });
+            })
+        </script>
 
     </body>
 </html>
