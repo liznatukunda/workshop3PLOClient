@@ -346,11 +346,9 @@
                             }),
                             success: function (data, textStatus, jqXHR) {
                                 alert('Account created successfully');
-                                closeForm();
-                                var table = $('#accounts').DataTable();
-                                table.ajax.reload(function (json) {
-                                    $('#username').val(json.lastInput);
-                                });
+                                
+                                var table = $('#accounts').dataTable();
+                                table.api().ajax.reload();
                             }});
                         closeAddAccountForm();
                     }
@@ -408,10 +406,8 @@
                             }),
                             success: function (data, textStatus, jqXHR) {
                                 alert('Account has been updated');
-                                var table = $('#accounts').DataTable();
-                                table.ajax.reload(function (json) {
-                                    $('#username').val(json.lastInput);
-                                });
+                                var table = $('#accounts').dataTable();
+                                table.api().ajax.reload();
                             }});
                         closeAccountEditForm();
                     }
@@ -438,11 +434,10 @@
                                 ,
                                 success: function (data, textStatus, jqXHR) {
                                     alert('Account deleted successfully');
-                                    var table = $('#accounts').DataTable();
-                                    table.ajax.reload(function (json) {
-                                        $('#username').val(json.lastInput);
-                                    });
-                                }});
+                                    var table = $('#accounts').dataTable();
+                                table.api().ajax.reload();
+                                        }});
+                                    
                         } else {
                             alert("User does not want to continue!");
 
@@ -519,12 +514,10 @@
                                 }),
                                 success: function (data, textStatus, jqXHR) {
                                     alert('Artikel created successfully');
-                                    closeForm();
-                                    var table = $('#artikel').DataTable();
-                                    table.ajax.reload(function (json) {
-                                        $('#naam').val(json.lastInput);
-                                    });
-                                }});
+                                  
+                                    var table = $('#artikel').dataTable();
+                                table.api().ajax.reload();
+                            }});
                             closeAddForm();
                         }
                     </script>
@@ -582,11 +575,9 @@
                                 }),
                                 success: function (data, textStatus, jqXHR) {
                                     alert('Artikel has been updated');
-                                    var table = $('#artikel').DataTable();
-                                    table.ajax.reload(function (json) {
-                                        $('#naam').val(json.lastInput);
-                                    });
-                                }});
+                                    var table = $('#artikel').dataTable();
+                                table.api().ajax.reload();
+                            }});
                             closeEditArtikelForm();
                         }
                     </script>
@@ -613,11 +604,10 @@
                                     ,
                                     success: function (data, textStatus, jqXHR) {
                                         alert('Artikel deleted successfully');
-                                        var table = $('#artikel').DataTable();
-                                        table.ajax.reload(function (json) {
-                                            $('#naam').val(json.lastInput);
-                                        });
-                                    }});
+                                        var table = $('#artikel').dataTable();
+                                table.api().ajax.reload();
+                                        }});
+                                    
                             } else {
                                 alert("User does not want to continue!");
 
@@ -729,12 +719,10 @@
                                 }),
                                 success: function (data, textStatus, jqXHR) {
                                     alert('Klant created successfully');
-                                    closeForm();
-                                    var table = $('#klanten').DataTable();
-                                    table.ajax.reload(function (json) {
-                                        $('#voornaam').val(json.lastInput);
-                                    });
-                                }});
+                                
+                                    var table = $('#klanten').dataTable();
+                                table.api().ajax.reload();
+                            }});
                             closeAddKlantForm();
                         }
                     </script>
@@ -796,11 +784,9 @@
                                 }),
                                 success: function (data, textStatus, jqXHR) {
                                     alert('Klant has been updated');
-                                    var table = $('#klanten').DataTable();
-                                    table.ajax.reload(function (json) {
-                                        $('#voornaam').val(json.lastInput);
-                                    });
-                                }});
+                                    var table = $('#klanten').dataTable();
+                                table.api().ajax.reload();
+                            }});
                             closeKlantEditForm();
                         }
                     </script>
@@ -826,11 +812,10 @@
                                     ,
                                     success: function (data, textStatus, jqXHR) {
                                         alert('Klant deleted successfully');
-                                        var table = $('#klanten').DataTable();
-                                        table.ajax.reload(function (json) {
-                                            $('#voornaam').val(json.lastInput);
-                                        });
-                                    }});
+                                        var table = $('#klanten').dataTable();
+                                table.api().ajax.reload();
+                                        }});
+                                    
                             } else {
                                 alert("User does not want to continue!");
 
