@@ -353,12 +353,12 @@
             <h1>Boer Piet's Kaaswinkel </h1> 
             <p>Wij specialiseren in geweldig lekkere kazen</p> 
             <form>
-<!--                <div class="input-group">
-                    <input type="email" class="form-control" size="50" placeholder="Email Address" required>
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-danger" style="background-color: #bc3409; border-color: black " >Subscribe</button>
-                    </div>
-                </div>-->
+                <!--                <div class="input-group">
+                                    <input type="email" class="form-control" size="50" placeholder="Email Address" required>
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-danger" style="background-color: #bc3409; border-color: black " >Subscribe</button>
+                                    </div>
+                                </div>-->
             </form>
         </div>
 
@@ -404,19 +404,38 @@
                         <h1>Voeg Account toe</h1>
 
                         <label for="usernaam" ><b>Username</b></label>
-                        <input id="usernaam" type="text" placeholder="voer usernaam in" name="usernaam" required>
+                        <input id="usernaam" type="text" placeholder="voer usernaam in" name="usernaam" required  minlength=4 oninvalid="this.setCustomValidity('Voer Usernaam in ')"  oninput="this.setCustomValidity('')">
 
                         <label for="password" ><b>Password</b></label>
-                        <input id="password" type="password" placeholder="voer Password in" name="password" required>
+                        <input id="password" type="password" placeholder="voer Password in" name="password" required  minlength=4 oninvalid="this.setCustomValidity('Voer wachtwoord in ')"  oninput="this.setCustomValidity('')">
 
                         <label for="rol" ><b>Rol</b></label>
-                        <input id="Rol" type="text" placeholder="voer Rol in" name="rol" required>
+                        <select id="Rol" >
+                            <option value="klant">klant</option>
+                            <option value="medewerker">medewerker</option>
+                            <option value="beheerder">beheerder</option>
+                        </select>
 
-                        <button type="button" class="btn" onclick="saveAccountForm(document.getElementById('usernaam').value, document.getElementById('password').value, document.getElementById('Rol').value)">save</button>
+                        
+                        <button type="button" class="btn" onclick="validateAddAccount()">save</button>
                         <button type="button" class="btn cancel" onclick="closeAddAccountForm()">Close</button>
                     </form>
                 </div>
 
+                  <script>
+                        function validateAddAccount() {
+                            if (document.getElementById('accountform').checkValidity()) {
+                                saveAccountForm(document.getElementById('usernaam').value, document.getElementById('password').value, document.getElementById('Rol').value);
+                            } else
+                            {
+                                alert('ongeldige waarden');
+//                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
+
+                            }
+                        }
+                        ;
+                    </script>        
+                
                 <script>
                     function openAddAccountForm() {
                         document.getElementById("accountform").reset();
@@ -462,28 +481,47 @@
                         <input id="accounteditid" type="number" placeholder="" name="id" required value="" disabled="" >
 
                         <label for="usernaam" ><b>Username</b></label>
-                        <input id="accounteditusernaam" type="text" placeholder="" name="usernaam" value="" required>
+                        <input id="accounteditusernaam" type="text" placeholder="" name="usernaam" value="" required minlength=4 oninvalid="this.setCustomValidity('Voer Usernaam in ')"  oninput="this.setCustomValidity('')">
 
                         <label for="password" ><b>Password</b></label>
-                        <input id="accounteditpassword" type="password" placeholder="" name="password" value="" required>
+                        <input id="accounteditpassword" type="password" placeholder="" name="password" value="" required minlength=4 oninvalid="this.setCustomValidity('Voer wachtwoord in ')"  oninput="this.setCustomValidity('')">
 
                         <label for="rol" ><b>Rol</b></label>
-                        <input id="accounteditRol" type="text" placeholder="" name="rol" value="" required>
+                        <select id="accounteditRol"  disabled>
+                            <option value="klant">klant</option>
+                            <option value="medewerker">medewerker</option>
+                            <option value="beheerder">beheerder</option>
+                        </select>
 
-                        <button type="button" class="btn" onclick="editAccountForm(document.getElementById('accounteditid').value, document.getElementById('accounteditusernaam').value, document.getElementById('accounteditpassword').value, document.getElementById('accounteditRol').value)">save</button>
+                        <button type="button" class="btn" onclick=" validateEditAccount()">save</button>
                         <button type="button" class="btn cancel" onclick="closeAccountEditForm()">Close</button>
                     </form>
                 </div>
 
+                <script>
+                        function validateEditAccount() {
+                            if (document.getElementById('accountfrm2').checkValidity()) {
+                                editAccountForm(document.getElementById('accounteditid').value, document.getElementById('accounteditusernaam').value, document.getElementById('accounteditpassword').value, document.getElementById('accounteditRol').value);
+                            } else
+                            {
+                                alert('ongeldige waarden');
+//                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
+
+                            }
+                        }
+                        ;
+                    </script>        
+                
                 <script>
                     function openAccountEditForm(data) {
                         document.getElementById("accountfrm2").reset();
                         $('#accounteditid').attr('value', data.id.valueOf());
                         $('#accounteditusernaam').attr('value', data.username.valueOf());
                         $('#accounteditpassword').attr('value', data.password.valueOf());
-                        $('#accounteditRol').attr('value', data.Rol.valueOf());
+                        $('#accounteditRol').val(data.Rol.valueOf());
                         document.getElementById("EditDeleteAccountForm").style.display = "block";
                     }
+           
 
                     function closeAccountEditForm() {
                         document.getElementById("EditDeleteAccountForm").style.display = "none";
@@ -574,18 +612,35 @@
                             <h1>Voeg Artikel toe</h1>
 
                             <label for="naam" ><b>Naam</b></label>
-                            <input id="naam" type="text" placeholder="voer naam in" name="naam" required>
+                            <input id="naam" type="text" placeholder="voer naam in" name="naam" required  oninvalid="this.setCustomValidity('Voer artikelnaam in ')"  oninput="this.setCustomValidity('')">
 
                             <label for="prijs"><b>Prijs</b></label>
-                            <input type="number" id="prijs" placeholder="voer prijs in" name="prijs" required>
+                            <input type="number" id="prijs" placeholder="voer prijs in" name="prijs" required min="0" oninvalid="this.setCustomValidity('Voer prijs in')"  oninput="this.setCustomValidity('')">
 
                             <label for="voorraad"><b>Voorraad</b></label>
-                            <input type="number" id="voorraad" placeholder="voer voorraad in" name="voorraad" required>
+                            <input type="number" id="voorraad" placeholder="voer voorraad in" name="voorraad" required min="0" oninvalid="this.setCustomValidity('Voer voorraad in')"  oninput="this.setCustomValidity('')">
 
-                            <button type="button" class="btn" onclick="saveArtikelForm(document.getElementById('naam').value, document.getElementById('prijs').value, document.getElementById('voorraad').value)">save</button>
+                            <!--                            <button type="button" class="btn" onclick="saveArtikelForm(document.getElementById('naam').value, document.getElementById('prijs').value, document.getElementById('voorraad').value)">save</button>
+                                                        <button type="button" class="btn cancel" onclick="closeAddForm()">Close</button>-->
+
+
+                            <button type="button" class="btn" onclick="validateArtikel()">save</button>
                             <button type="button" class="btn cancel" onclick="closeAddForm()">Close</button>
                         </form>
                     </div>
+                    <script>
+                        function validateArtikel() {
+                            if (document.getElementById('artikelform').checkValidity()) {
+                                saveArtikelForm(document.getElementById('naam').value, document.getElementById('prijs').value, document.getElementById('voorraad').value);
+                            } else
+                            {
+                                alert('ongeldige waarden');
+//                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
+
+                            }
+                        }
+                        ;
+                    </script>                
 
                     <script>
                         function openAddForm() {
@@ -631,18 +686,33 @@
                             <input id="artikeleditid" type="number" placeholder="" name="id" required value="" disabled="" >
 
                             <label for="naam" ><b>Naam</b></label>
-                            <input id="artikeleditnaam" type="text" placeholder="" name="naam" value="" required>
+                            <input id="artikeleditnaam" type="text" placeholder="" name="naam" value="" required  oninvalid="this.setCustomValidity('Voer artikelnaam in ')"  oninput="this.setCustomValidity('')">
 
                             <label for="prijs"><b>Prijs</b></label>
-                            <input type="number" id="artikeleditprijs" placeholder="" name="prijs" value="" required>
+                            <input type="number" id="artikeleditprijs" placeholder="" name="prijs" value="" required min="0"  oninvalid="this.setCustomValidity('Voer prijs in ')"  oninput="this.setCustomValidity('')">
 
                             <label for="voorraad"><b>Voorraad</b></label>
-                            <input type="number" id="artikeleditvoorraad" placeholder="" name="voorraad" value="" required>
+                            <input type="number" id="artikeleditvoorraad" placeholder="" name="voorraad" value="" required min="0"  oninvalid="this.setCustomValidity('Voer voorraad in ')"  oninput="this.setCustomValidity('')">
 
-                            <button type="button" class="btn" onclick="editArtikelForm(document.getElementById('artikeleditid').value, document.getElementById('artikeleditnaam').value, document.getElementById('artikeleditprijs').value, document.getElementById('artikeleditvoorraad').value)">save</button>
+                            <button type="button" class="btn" onclick="validateEditArtikel()">save</button>
                             <button type="button" class="btn cancel" onclick="closeEditArtikelForm()">Close</button>
                         </form>
                     </div>
+                    
+                    
+                     <script>
+                        function validateEditArtikel() {
+                            if (document.getElementById('frm2').checkValidity()) {
+                                editArtikelForm(document.getElementById('artikeleditid').value, document.getElementById('artikeleditnaam').value, document.getElementById('artikeleditprijs').value, document.getElementById('artikeleditvoorraad').value);
+                            } else
+                            {
+                                alert('ongeldige waarden');
+//                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
+
+                            }
+                        }
+                        ;
+                    </script>           
 
                     <script>
                         function openEditForm(data) {
@@ -754,13 +824,13 @@
                             <h1>Voeg klant toe</h1>
 
                             <label for="voornaam" ><b>Voornaam</b></label>
-                            <input id="voornaam" type="text" placeholder="voer voornaam in" name="voornaam" required>
+                            <input id="voornaam" type="text" placeholder="voer voornaam in" name="voornaam" required maxlength="45" oninvalid="this.setCustomValidity('Voer voornaam in ')"  oninput="this.setCustomValidity('')">
 
                             <label for="tussenvoegsel" ><b>Tussenvoegsel</b></label>
-                            <input id="tussenvoegsel" type="text" placeholder="voer tussenvoegsel in" name="tussenvoegsel">
+                            <input id="tussenvoegsel" type="text" placeholder="voer tussenvoegsel in" name="tussenvoegsel" maxlength="45">
 
                             <label for="achternaam" ><b>Achternaam</b></label>
-                            <input id="achternaam" type="text" placeholder="voer achternaam in" name="achternaam" required>
+                            <input id="achternaam" type="text" placeholder="voer achternaam in" name="achternaam" required maxlength="45" oninvalid="this.setCustomValidity('Voer achternaam in ')"  oninput="this.setCustomValidity('')">
 
                             <!--                            To be selected from already existing accounts-->
                             <label for="account" ><b>Account</b></label>
@@ -768,11 +838,26 @@
 
 
 
-                            <button type="button" class="btn" onclick="saveKlantForm(document.getElementById('voornaam').value, document.getElementById('tussenvoegsel').value, document.getElementById('achternaam').value, document.getElementById('accountselect').value)">save</button>
+                            <button type="button" class="btn" onclick="validateAddKlant()">save</button>
                             <button type="button" class="btn cancel" onclick="closeAddKlantForm()">Close</button>
                         </form>
                     </div>
 
+                      <script>
+                        function validateAddKlant() {
+                            if (document.getElementById('klantform').checkValidity()) {
+                                saveKlantForm(document.getElementById('voornaam').value, document.getElementById('tussenvoegsel').value, document.getElementById('achternaam').value, document.getElementById('accountselect').value);
+                            } else
+                            {
+                                alert('ongeldige waarden');
+//                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
+
+                            }
+                        }
+                        ;
+                    </script>        
+                    
+                    
                     <script>
                         function openAddKlantForm() {
 
@@ -844,21 +929,35 @@
                             <input id="klanteditid" type="number" placeholder="" name="id" required value="" disabled="" >
 
                             <label for="voornaam" ><b>Voornaam</b></label>
-                            <input id="klanteditvoornaam" type="text" placeholder="voer voornaam in" name="voornaam" required>
+                            <input id="klanteditvoornaam" type="text" placeholder="voer voornaam in" name="voornaam" required  maxlength="45" oninvalid="this.setCustomValidity('Voer voornaam in ')"  oninput="this.setCustomValidity('')">
 
                             <label for="tussenvoegsel" ><b>Tussenvoegsel</b></label>
-                            <input id="klantedittussenvoegsel" type="text" placeholder="voer tussenvoegsel in" name="tussenvoegsel">
+                            <input id="klantedittussenvoegsel" type="text" placeholder="voer tussenvoegsel in" name="tussenvoegsel" maxlength="45">
 
                             <label for="achternaam" ><b>Achternaam</b></label>
-                            <input id="klanteditachternaam" type="text" placeholder="voer achternaam in" name="achternaam" required>
+                            <input id="klanteditachternaam" type="text" placeholder="voer achternaam in" name="achternaam" required  maxlength="45" oninvalid="this.setCustomValidity('Voer achternaam in ')"  oninput="this.setCustomValidity('')">
 
                             <label for="accountId" ><b>Account Id</b></label>
                             <input id="klanteditaccountId" type="text" placeholder="" name="accountId" disabled>
 
-                            <button type="button" class="btn" onclick="editKlantForm(document.getElementById('klanteditid').value, document.getElementById('klanteditvoornaam').value, document.getElementById('klantedittussenvoegsel').value, document.getElementById('klanteditachternaam').value, document.getElementById('klanteditaccountId').value)">save</button>
+                            <button type="button" class="btn" onclick="validateEditKlant()">save</button>
                             <button type="button" class="btn cancel" onclick="closeKlantEditForm()">Close</button>
                         </form>
                     </div>
+                    
+                       <script>
+                        function validateEditKlant() {
+                            if (document.getElementById('klantfrm2').checkValidity()) {
+                                editKlantForm(document.getElementById('klanteditid').value, document.getElementById('klanteditvoornaam').value, document.getElementById('klantedittussenvoegsel').value, document.getElementById('klanteditachternaam').value, document.getElementById('klanteditaccountId').value);
+                            } else
+                            {
+                                alert('ongeldige waarden');
+//                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
+
+                            }
+                        }
+                        ;
+                    </script> 
 
                     <script>
                         function openKlantEditForm(data) {
@@ -1122,605 +1221,674 @@
         <!-- Container (bestelregel Section) -->
 
 
-            <div id="BestelRegel" class="container-fluid text-center">
-                <h2>Bestelregels</h2>
-                <h4>De bestelregels</h4>
-                <br>
-                <div class="header">
+        <div id="BestelRegel" class="container-fluid text-center">
+            <h2>Bestelregels</h2>
+            <h4>De bestelregels</h4>
+            <br>
+            <div class="header">
 
 
-                    <!--         <input type="text" id="searchKey"/>
-                                <button id="btnSearch">Search</button>-->
-                    <button id="btnAddbestelregel" onclick="openAddBestelregelForm()">Add New </button>
+                <!--         <input type="text" id="searchKey"/>
+                            <button id="btnSearch">Search</button>-->
+                <button id="btnAddbestelregel" onclick="openAddBestelregelForm()">Add New </button>
 
-                    <table id="bestelregel" class="display" width="100%">
+                <table id="bestelregel" class="display" width="100%">
 
-                    </table>
+                </table>
 
 
 
+            </div>
+
+            <!---------------------------------------------------------------------------------ADD bestelregel form   -->
+
+            <div id = "bestelregelAddpopup">
+                <div class="form-popup" id="addBestelregelForm">
+                    <form  id="bestelregelform" class="form-container" >
+                        <h1>Voeg bestelregel toe</h1>
+
+                        <label for="aantal" ><b>Aantal</b></label>
+                        <input id="aantal" type="number" placeholder="voer aantal in" name="aantal" required min="0" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
+
+                        <label for="artikel" ><b>Artikel</b></label>
+                        <select id="artikelselect"></select>
+
+                        <label for="bestellingId" ><b>Bestelling</b></label>
+                        <select id="bestellingIdselect"></select>
+
+                        <button type="button" class="btn" onclick="validateAddBestelregel()">save</button>
+                        <button type="button" class="btn cancel" onclick="closeAddBestelregelForm()">Close</button>
+                    </form>
                 </div>
+                
+                <script>
+                        function validateAddBestelregel() {
+                            if (document.getElementById('bestelregelform').checkValidity()) {
+                                saveBestelRegelForm(document.getElementById('aantal').value, document.getElementById('artikelselect').value, document.getElementById('bestellingIdselect').value);
+                            } else
+                            {
+                                alert('ongeldige waarden');
+//                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
 
-                <!---------------------------------------------------------------------------------ADD bestelregel form   -->
-
-                <div id = "bestelregelAddpopup">
-                    <div class="form-popup" id="addBestelregelForm">
-                        <form  id="bestelregelform" class="form-container" >
-                            <h1>Voeg bestelregel toe</h1>
-
-                            <label for="aantal" ><b>Aantal</b></label>
-                            <input id="aantal" type="number" placeholder="voer aantal in" name="aantal" required>
-
-                            <label for="artikel" ><b>Artikel</b></label>
-                            <select id="artikelselect"></select>
-
-                            <label for="bestellingId" ><b>Bestelling</b></label>
-                            <select id="bestellingIdselect"></select>
-
-                            <button type="button" class="btn" onclick="saveBestelRegelForm(document.getElementById('aantal').value, document.getElementById('artikelselect').value, document.getElementById('bestellingIdselect').value)">save</button>
-                            <button type="button" class="btn cancel" onclick="closeAddBestelregelForm()">Close</button>
-                        </form>
-                    </div>
-
-                    <script>
-                        function openAddBestelregelForm() {
-
-                            $.ajax({
-                                type: 'GET',
-                                contentType: 'application/json',
-                                url: 'http://localhost:8080/workshop3LO/webresources/artikel',
-                                dataType: "json",
-
-                                success: function (data, textStatus, jqXHR) {
-
-                                    var select = document.getElementById("artikelselect");
-
-                                    for (index in data) {
-                                        select.options[select.options.length] = new Option(data[index].id + ' euro: ' + data[index].prijs + ' ' + data[index].naam);
-                                    }
-
-                                }});
-                            $.ajax({
-                                type: 'GET',
-                                contentType: 'application/json',
-                                url: 'http://localhost:8080/workshop3LO/webresources/bestelling',
-                                dataType: "json",
-
-                                success: function (data, textStatus, jqXHR) {
-
-                                    var select = document.getElementById("bestellingIdselect");
-                                    for (index in data) {
-                                        select.options[select.options.length] = new Option(data[index].id);
-                                    }
-
-                                }});
-
-                            document.getElementById("bestelregelform").reset();
-                            document.getElementById("addBestelregelForm").style.display = "block";
+                            }
                         }
+                        ;
+                    </script> 
 
-                        function closeAddBestelregelForm() {
-                            document.getElementById("addBestelregelForm").style.display = "none";
+                <script>
+                    function openAddBestelregelForm() {
+
+                        $.ajax({
+                            type: 'GET',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/artikel',
+                            dataType: "json",
+
+                            success: function (data, textStatus, jqXHR) {
+
+                                var select = document.getElementById("artikelselect");
+
+                                for (index in data) {
+                                    select.options[select.options.length] = new Option(data[index].id + ' euro: ' + data[index].prijs + ' ' + data[index].naam);
+                                }
+
+                            }});
+                        $.ajax({
+                            type: 'GET',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/bestelling',
+                            dataType: "json",
+
+                            success: function (data, textStatus, jqXHR) {
+
+                                var select = document.getElementById("bestellingIdselect");
+                                for (index in data) {
+                                    select.options[select.options.length] = new Option(data[index].id);
+                                }
+
+                            }});
+
+                        document.getElementById("bestelregelform").reset();
+                        document.getElementById("addBestelregelForm").style.display = "block";
+                    }
+
+                    function closeAddBestelregelForm() {
+                        document.getElementById("addBestelregelForm").style.display = "none";
+                    }
+                    function saveBestelRegelForm(aantal, artikel, bestellingId) {
+
+                        var res = artikel.split(" ");
+                        var artikelid = res[0];
+                        var prijs = res[2] * aantal;
+                        $.ajax({
+                            type: 'POST',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/bestelregel',
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "aantal": aantal,
+                                "artikelidArtikel": {"id": artikelid},
+                                "bestellingidBestelling": {"id": bestellingId},
+                                "id": null,
+                                "prijs": prijs
+
+
+
+
+
+
+
+
+                            }),
+                            success: function (data, textStatus, jqXHR) {
+                                alert('bestelregel created successfully');
+
+                                var table = $('#bestelregel').dataTable();
+                                table.api().ajax.reload();
+                                updateBestellingTotaalPrijs(bestellingId);
+                            }});
+                        closeAddBestelregelForm();
+                    }
+                </script>
+                <script>
+                    function  updateBestellingTotaalPrijs(bestellingId) {
+                        $.ajax({
+                            "url": 'http://localhost:8080/workshop3LO/webresources/bestelregel/search/' + bestellingId,
+                            "type": 'GET',
+                            "cache": false,
+                            "dataType": 'json',
+                            "dataSrc": ""
+
+
+                            ,
+                            success: function (data, textStatus, jqXHR) {
+                                var totaalprijs = 0;
+                                for (var i = 0; i < data.length; i++) {
+                                    totaalprijs += data[i].prijs;
+
+                                }
+
+                                var klantid = data[0].bestellingidBestelling.klantidKlant.id.valueOf();
+                                $.ajax({
+                                    type: 'PUT',
+                                    contentType: 'application/json',
+                                    url: 'http://localhost:8080/workshop3LO/webresources/bestelling/' + bestellingId,
+                                    dataType: "json",
+                                    data: JSON.stringify({
+                                        "id": bestellingId,
+                                        "klantidKlant": {"id": klantid},
+                                        "prijs": totaalprijs
+
+
+                                    }),
+                                    success: function (data, textStatus, jqXHR) {
+                                        alert('bestelling has been updated');
+                                        var table = $('#bestelling').dataTable();
+                                        table.api().ajax.reload();
+                                    }});
+
+                            }});
+                    }
+                </script>
+            </div>
+            <!----------------------------------------------------------------------------------EDIT  bestelregel -->
+
+            <div id = "bestelRegelEditDeletepopup">
+                <div class="form-popup" id="EditDeleteBestelRegelForm">
+                    <form  id="bestelRegelfrm2" class="form-container" >
+                        <h1>Voeg BestelRegel toe</h1>
+
+                        <label for="id" ><b>id</b></label>
+                        <input id="editid" type="number" value="" name="id" disabled>
+
+                        <label for="aantal" ><b>Aantal</b></label>
+                        <input id="editAantal" type="number" placeholder="voer aantal in" name="aantal" required min="0" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
+
+
+                        <label for="artikel" ><b>Artikel</b></label>
+                        <select id="editArtikelselect"></select>
+
+                        <label for="bestellingId" ><b>Bestelling</b></label>
+                        <select id="editBestellingIdselect"></select>
+
+                        <button type="button" class="btn" onclick="validateEditBestelregel()">save</button>
+                        <button type="button" class="btn cancel" onclick="closeBestelregelEditForm()">Close</button>
+                    </form>
+                </div>
+                
+                <script>
+                        function validateEditBestelregel() {
+                            if (document.getElementById('bestelRegelfrm2').checkValidity()) {
+                                editBestelregelForm(document.getElementById('editid').value, document.getElementById('editAantal').value, document.getElementById('editArtikelselect').value, document.getElementById('editBestellingIdselect').value);
+                            } else
+                            {
+                                alert('ongeldige waarden');
+//                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
+
+                            }
                         }
-                        function saveBestelRegelForm(aantal, artikel, bestellingId) {
+                        ;
+                    </script> 
 
-                            var res = artikel.split(" ");
-                            var artikelid = res[0];
-                            var prijs = res[2] * aantal;
+                <script>
+                    function openBestelregelForm(data) {
+                        document.getElementById("bestelRegelfrm2").reset();
+                        $('#editid').attr('value', data.id.valueOf());
+                        $('#editAantal').attr('value', data.aantal.valueOf());
+                        $('#editPrijs').attr('value', data.prijs.valueOf());
+//                    
+                       
+                        
+                        $.ajax({
+                            type: 'GET',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/artikel',
+                            dataType: "json",
+
+                            success: function (dataajax, textStatus, jqXHR) {
+
+                                var select = document.getElementById("editArtikelselect");
+
+                                for (index in dataajax) {
+                                    select.options[select.options.length] = new Option(dataajax[index].id + ' euro: ' + dataajax[index].prijs + ' ' + dataajax[index].naam);
+                                    if(data.artikelidArtikel.naam === dataajax[index].naam){
+//                                      
+                                       document.getElementById("editArtikelselect").selectedIndex = index;
+                                    }
+                                }
+                                
+                            }});
+                        
+//                        $('#editArtikelselect').val(data.artikelidArtikel.id + ' euro: ' + data.artikelidArtikel.prijs + ' ' + data.artikelidArtikel.naam);
+                        $.ajax({
+                            type: 'GET',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/bestelling',
+                            dataType: "json",
+
+                            success: function (dataajax, textStatus, jqXHR) {
+
+                                var select = document.getElementById("editBestellingIdselect");
+                                for (index in dataajax) {
+                                    select.options[select.options.length] = new Option(dataajax[index].id);
+                                     if(data.bestellingidBestelling.id === dataajax[index].id){
+//                                      
+                                       document.getElementById("editBestellingIdselect").selectedIndex = index;
+                                    }
+                                }
+
+                            }});
+                        document.getElementById("bestelRegelfrm2").reset();
+                        document.getElementById("EditDeleteBestelRegelForm").style.display = "block";
+                    }
+
+                    function closeBestelregelEditForm() {
+                        document.getElementById("EditDeleteBestelRegelForm").style.display = "none";
+                    }
+                    function editBestelregelForm(id, editAantal, editArtikelselect, editBestellingIdselect) {
+
+                        var res = editArtikelselect.split(" ");
+                        var artikelid = res[0];
+                        var prijs = res[2] * editAantal;
+
+                        $.ajax({
+                            type: 'PUT',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/bestelregel/' + id,
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "aantal": editAantal,
+                                "artikelidArtikel": {"id": artikelid},
+                                "bestellingidBestelling": {"id": editBestellingIdselect},
+                                "id": id,
+                                "prijs": prijs
+
+                            }),
+                            success: function (data, textStatus, jqXHR) {
+                                alert('bestelregel has been updated');
+                                var table = $('#bestelregel').dataTable();
+                                table.api().ajax.reload();
+                                updateBestellingTotaalPrijs(editBestellingIdselect);
+                            }});
+                        closeBestelregelEditForm();
+                    }
+                </script>
+                <!---------------------------------------------------------------------------------------DELETE bestelregel -->
+                <script>
+
+                    function deleteBestelregel(data) {
+
+                        var bestellingId = data.bestellingidBestelling.id.valueOf();
+
+                        var retVal = confirm("Do you want to continue ?");
+                        if (retVal === true) {
                             $.ajax({
-                                type: 'POST',
+                                type: 'DELETE',
                                 contentType: 'application/json',
-                                url: 'http://localhost:8080/workshop3LO/webresources/bestelregel',
-                                dataType: "json",
-                                data: JSON.stringify({
-                                    "aantal": aantal,
-                                    "artikelidArtikel": {"id": artikelid},
-                                    "bestellingidBestelling": {"id": bestellingId},
-                                    "id": null,
-                                    "prijs": prijs
+                                url: 'http://localhost:8080/workshop3LO/webresources/bestelregel/' + data.id.valueOf(),
+                                dataType: "json"
+                                        //                                        data: JSON.stringify({
+                                        //                                            "id": data.id.valueOf()
+                                        //                                            "naam": naam,
+                                        //                                            "prijs": prijs,
+                                        //                                            "voorraad": voorraad
 
-
-
-
-
-
-
-
-                                }),
+                                ,
                                 success: function (data, textStatus, jqXHR) {
-                                    alert('bestelregel created successfully');
-
+                                    alert('bestelregel deleted successfully');
                                     var table = $('#bestelregel').dataTable();
                                     table.api().ajax.reload();
                                     updateBestellingTotaalPrijs(bestellingId);
                                 }});
-                            closeAddBestelregelForm();
-                        }
-                    </script>
-                    <script>
-                        function  updateBestellingTotaalPrijs(bestellingId) {
-                            $.ajax({
-                                "url": 'http://localhost:8080/workshop3LO/webresources/bestelregel/search/' + bestellingId,
-                                "type": 'GET',
-                                "cache": false,
-                                "dataType": 'json',
-                                "dataSrc": ""
 
+                        } else {
+                            alert("User does not want to continue!");
+
+                        }
+
+                    }
+                </script>
+            </div>
+        </div>
+
+        <!-- Container (Address Section) -->                             
+
+        <div id="address" class="container-fluid text-center">
+            <h2>Address</h2>
+            <h4>De adressen</h4>
+            <br>
+            <div class="header">
+
+
+                <!--         <input type="text" id="searchKey"/>
+                            <button id="btnSearch">Search</button>-->
+                <button id="btnAddArtikel" onclick="openAddAddressForm()">Add New </button>
+
+                <table id="Address" class="display" width="100%">
+
+                </table>
+
+
+
+            </div>
+
+
+
+            <!---------------------------------------------------------------------------------ADD Address form   -->
+            <div id = "addressAddpopup">
+                <div class="form-popupadres" id="addAddressForm" >
+                    <form  id="addressform" class="form-containeradres"  >
+
+                        <h1>Voeg Address toe</h1>
+
+                        <label for="addressType" ><b>Address Type</b></label>
+                        <select id="addressTypeselect">
+                            <option value="POSTADRES">POSTADRES</option>
+                            <option value="FACTUURADRES">FACTUURADRES</option>
+                            <option value="BEZORGADRES">BEZORGADRES</option>
+                        </select><br>
+                        <label for="huisNummer" ><b>Huis Nummer</b></label>
+                        <input id="huisNummer" type="number" placeholder="voer huisNummer in" name="huisNummer" required min="0" oninvalid="this.setCustomValidity('Voer huisnummer in ')"  oninput="this.setCustomValidity('')"><br>
+
+                        <label for="postCode" >postCode</label>
+                        <input id="postCode" type="text" placeholder="voer postCode in" name="postCode" required pattern="[1-9][0-9]{3}\s?[a-zA-Z]{2}" title="geldige postcode = 4 cijfers 2 letters" ><br>
+
+                        <label for="straatNaam" ><b>straatNaam</b></label>
+                        <input id="straatNaam" type="text" placeholder="voer straatNaam in" name="straatNaam" required maxlength="255" oninvalid="this.setCustomValidity('Voer straatnaam in ')"  oninput="this.setCustomValidity('')"><br>
+
+                        <label for="toevoeging" ><b>toevoeging</b></label>
+                        <input id="toevoeging" type="text" placeholder="voer toevoeging in" name="toevoeging" maxlength="255"><br>
+
+                        <label for="woonplaats" ><b>woonplaats</b></label>
+                        <input id="woonplaats" type="text" placeholder="voer woonplaats in" name="woonplaats" required maxlength="255"  oninvalid="this.setCustomValidity('Voer woonplaats in ')"  oninput="this.setCustomValidity('')"><br>
+
+                        <label for="klantId" ><b>klantId</b></label>
+                        <select id="klantIdselect"></select><br>
+
+                        <button type="button" class="btn" onclick="validateAddAddress()">save</button>
+                        <button type="button" class="btn cancel" onclick="closeAddAddressForm()">Close</button>
+                    </form>
+                </div>
+
+                  <script>
+                        function validateAddAddress() {
+                            if (document.getElementById('addressform').checkValidity()) {
+                                saveAddressForm(document.getElementById('addressTypeselect').value, document.getElementById('huisNummer').value, document.getElementById('postCode').value, document.getElementById('straatNaam').value, document.getElementById('toevoeging').value, document.getElementById('woonplaats').value, document.getElementById('klantIdselect').value);
+                            } else
+                            {
+                                alert('ongeldige waarden');
+//                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
+
+                            }
+                        }
+                        ;
+                    </script> 
+                
+                <script>
+                    function openAddAddressForm() {
+
+                        $.ajax({
+                            type: 'GET',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/klant',
+                            dataType: "json",
+
+                            success: function (data, textStatus, jqXHR) {
+
+                                var select = document.getElementById("klantIdselect");
+                                for (index in data) {
+                                    select.options[select.options.length] = new Option(data[index].id + ' ' + data[index].achternaam);
+                                }
+
+                            }});
+                        document.getElementById("addressform").reset();
+                        document.getElementById("addAddressForm").style.display = "block";
+                    }
+
+                    function closeAddAddressForm() {
+                        document.getElementById("addAddressForm").style.display = "none";
+                    }
+                    function saveAddressForm(addressTypeselect, huisNummer, postCode, straatNaam, toevoeging, woonplaats, klantIdselect) {
+                        var res = klantIdselect.split(" ");
+                        var klantid = res[0];
+                        $.ajax({
+                            type: 'POST',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/adres',
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "adresType": addressTypeselect,
+                                "huisnummer": huisNummer,
+                                "id": null,
+                                "klantidKlant": {"id": klantid},
+                                "postcode": postCode,
+                                "straatnaam": straatNaam,
+                                "toevoeging": toevoeging,
+                                "woonplaats": woonplaats
+
+
+
+
+
+
+                            }),
+                            success: function (data, textStatus, jqXHR) {
+                                alert('Address created successfully');
+
+                                var table = $('#Address').dataTable();
+                                table.api().ajax.reload();
+                            }});
+                        closeAddAddressForm();
+                    }
+                </script>
+            </div>
+
+
+            <!----------------------------------------------------------------------------------edit Address   -->
+
+            <div id = "addressEditDeletepopup">
+                <div class="form-popup" id="EditDeleteAddressRegelForm">
+                    <form  id="addressfrm2" class="form-container" >
+                        <h1>Voeg Address toe</h1>
+
+                        <label for="editId" ><b>Id</b></label>
+                        <input id="editId" type="number" placeholder="" name="editId" value=""  disabled=""><br>
+
+                        <label for="editaddressType" ><b>Address Type</b></label>
+                        <select id="editaddressType">
+                            <option value="POSTADRES">POSTADRES</option>
+                            <option value="FACTUURADRES">FACTUURADRES</option>
+                            <option value="BEZORGADRES">BEZORGADRES</option>
+                        </select><br>
+                        <label for="edithuisNummer" ><b>Huis Nummer</b></label>
+                        <input id="edithuisNummer" type="number" placeholder="voer huisNummer in" name="edithuisNummer"  required min="0" oninvalid="this.setCustomValidity('Voer huisnummer in ')"  oninput="this.setCustomValidity('')"><br>
+
+                        <label for="editpostCode" >postCode</label>
+                        <input id="editpostCode" type="text" placeholder="voer postCode in" name="editpostCode" required  pattern="[1-9][0-9]{3}\s?[a-zA-Z]{2}" title="geldige postcode = 4 cijfers 2 letters"><br>
+
+                        <label for="editstraatNaam" ><b>straatNaam</b></label>
+                        <input id="editstraatNaam" type="text" placeholder="voer straatNaam in" name="editstraatNaam" required  maxlength="255" oninvalid="this.setCustomValidity('Voer straatnaam in ')"  oninput="this.setCustomValidity('')"><br>
+
+                        <label for="toevoeging" ><b>toevoeging</b></label>
+                        <input id="edittoevoeging" type="text" placeholder="voer toevoeging in" name="edittoevoeging" required maxlength="255"><br>
+
+                        <label for="editwoonplaats" ><b>woonplaats</b></label>
+                        <input id="editwoonplaats" type="text" placeholder="voer woonplaats in" name="editwoonplaats" required  maxlength="255" oninvalid="this.setCustomValidity('Voer woonplaats in ')"  oninput="this.setCustomValidity('')"><br>
+
+                        <label for="editklantId" ><b>klantId</b></label>
+                        <input  id="editklantId" type="number"  disabled><br>
+
+                        <button type="button" class="btn" onclick="">save</button>
+                        <button type="button" class="btn cancel" onclick="closeAddressEditForm()">Close</button>
+                    </form>
+                </div>
+                
+                <script>
+                        function validateEditAddress() {
+                            if (document.getElementById('addressfrm2').checkValidity()) {
+                                editAddressForm(document.getElementById('editId').value, document.getElementById('editaddressType').value, document.getElementById('edithuisNummer').value, document.getElementById('editpostCode').value, document.getElementById('editstraatNaam').value, document.getElementById('edittoevoeging').value, document.getElementById('editwoonplaats').value, document.getElementById('editklantId').value);
+                            } else
+                            {
+                                alert('ongeldige waarden');
+//                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
+
+                            }
+                        }
+                        ;
+                    </script> 
+
+                <script>
+                    function openAddressEditForm(data) {
+                        document.getElementById("addressfrm2").reset();
+                        $('#editId').attr('value', data.id.valueOf());
+                        $('#editaddressType').val(data.adresType.valueOf());
+                        $('#edithuisNummer').attr('value', data.huisnummer.valueOf());
+                        $('#editpostCode').attr('value', data.postcode.valueOf());
+                        $('#editstraatNaam').attr('value', data.straatnaam.valueOf());
+                        $('#edittoevoeging').attr('value', data.toevoeging.valueOf());
+                        $('#editwoonplaats').attr('value', data.woonplaats.valueOf());
+                        $('#editklantId').attr('value', data.klantidKlant.id.valueOf());
+
+
+                      
+                        document.getElementById("EditDeleteAddressRegelForm").style.display = "block";
+                    }
+
+                    function closeAddressEditForm() {
+                        document.getElementById("EditDeleteAddressRegelForm").style.display = "none";
+                    }
+                    function editAddressForm(id, editaddressType, edithuisNummer, editpostCode, editstraatNaam, edittoevoeging, editwoonplaats, editklantId) {
+
+                        $.ajax({
+                            type: 'PUT',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/adres/' + id,
+                            dataType: "json",
+                            data: JSON.stringify({
+                                "adresType": editaddressType,
+                                "huisnummer": edithuisNummer,
+                                "id": id,
+                                "klantidKlant": {"id": editklantId},
+                                "postcode": editpostCode,
+                                "straatnaam": editstraatNaam,
+                                "toevoeging": edittoevoeging,
+                                "woonplaats": editwoonplaats
+
+                            }),
+                            success: function (data, textStatus, jqXHR) {
+                                alert('Address has been updated');
+                                var table = $('#Address').dataTable();
+                                table.api().ajax.reload();
+                            }});
+                        closeAddressEditForm();
+                    }
+                </script>
+                <!---------------------------------------------------------------------------------------DELETE Address -->
+                <script>
+
+                    function deleteAddress(data) {
+
+                        var retVal = confirm("Do you want to continue ?");
+                        if (retVal === true) {
+                            $.ajax({
+                                type: 'DELETE',
+                                contentType: 'application/json',
+                                url: 'http://localhost:8080/workshop3LO/webresources/adres/' + data.id.valueOf(),
+                                dataType: "json"
+                                        //                                        data: JSON.stringify({
+                                        //                                            "id": data.id.valueOf()
+                                        //                                            "naam": naam,
+                                        //                                            "prijs": prijs,
+                                        //                                            "voorraad": voorraad
 
                                 ,
                                 success: function (data, textStatus, jqXHR) {
-                                    var totaalprijs = 0;
-                                    for (var i = 0; i < data.length; i++) {
-                                        totaalprijs += data[i].prijs;
-
-                                    }
-
-                                    var klantid = data[0].bestellingidBestelling.klantidKlant.id.valueOf();
-                                    $.ajax({
-                                        type: 'PUT',
-                                        contentType: 'application/json',
-                                        url: 'http://localhost:8080/workshop3LO/webresources/bestelling/' + bestellingId,
-                                        dataType: "json",
-                                        data: JSON.stringify({
-                                            "id": bestellingId,
-                                            "klantidKlant": {"id": klantid},
-                                            "prijs": totaalprijs
-
-
-                                        }),
-                                        success: function (data, textStatus, jqXHR) {
-                                            alert('bestelling has been updated');
-                                            var table = $('#bestelling').dataTable();
-                                            table.api().ajax.reload();
-                                        }});
-
-                                }});
-                        }
-                    </script>
-                </div>
-                <!----------------------------------------------------------------------------------EDIT  bestelregel -->
-
-                <div id = "bestelRegelEditDeletepopup">
-                    <div class="form-popup" id="EditDeleteBestelRegelForm">
-                        <form  id="bestelRegelfrm2" class="form-container" >
-                            <h1>Voeg BestelRegel toe</h1>
-
-                            <label for="id" ><b>id</b></label>
-                            <input id="editid" type="number" value="" name="id" disabled>
-
-                            <label for="aantal" ><b>Aantal</b></label>
-                            <input id="editAantal" type="number" placeholder="voer aantal in" name="aantal" required>
-
-
-                            <label for="artikel" ><b>Artikel</b></label>
-                            <select id="editArtikelselect"></select>
-
-                            <label for="bestellingId" ><b>Bestelling</b></label>
-                            <select id="editBestellingIdselect"></select>
-
-                            <button type="button" class="btn" onclick="editBestelregelForm(document.getElementById('editid').value, document.getElementById('editAantal').value, document.getElementById('editArtikelselect').value, document.getElementById('editBestellingIdselect').value)">save</button>
-                            <button type="button" class="btn cancel" onclick="closeBestelregelEditForm()">Close</button>
-                        </form>
-                    </div>
-
-                    <script>
-                        function openBestelregelForm(data) {
-                            document.getElementById("bestelRegelfrm2").reset();
-                            $('#editid').attr('value', data.id.valueOf());
-                            $('#editAantal').attr('value', data.aantal.valueOf());
-                            $('#editPrijs').attr('value', data.prijs.valueOf());
-                            $.ajax({
-                                type: 'GET',
-                                contentType: 'application/json',
-                                url: 'http://localhost:8080/workshop3LO/webresources/artikel',
-                                dataType: "json",
-
-                                success: function (data, textStatus, jqXHR) {
-
-                                    var select = document.getElementById("editArtikelselect");
-
-                                    for (index in data) {
-                                        select.options[select.options.length] = new Option(data[index].id + ' euro: ' + data[index].prijs + ' ' + data[index].naam);
-                                    }
-
-                                }});
-                            $.ajax({
-                                type: 'GET',
-                                contentType: 'application/json',
-                                url: 'http://localhost:8080/workshop3LO/webresources/bestelling',
-                                dataType: "json",
-
-                                success: function (data, textStatus, jqXHR) {
-
-                                    var select = document.getElementById("editBestellingIdselect");
-                                    for (index in data) {
-                                        select.options[select.options.length] = new Option(data[index].id);
-                                    }
-
-                                }});
-                            document.getElementById("bestelRegelfrm2").reset();
-                            document.getElementById("EditDeleteBestelRegelForm").style.display = "block";
-                        }
-
-                        function closeBestelregelEditForm() {
-                            document.getElementById("EditDeleteBestelRegelForm").style.display = "none";
-                        }
-                        function editBestelregelForm(id, editAantal, editArtikelselect, editBestellingIdselect) {
-
-                            var res = editArtikelselect.split(" ");
-                            var artikelid = res[0];
-                            var prijs = res[2] * editAantal;
-
-                            $.ajax({
-                                type: 'PUT',
-                                contentType: 'application/json',
-                                url: 'http://localhost:8080/workshop3LO/webresources/bestelregel/' + id,
-                                dataType: "json",
-                                data: JSON.stringify({
-                                    "aantal": editAantal,
-                                    "artikelidArtikel": {"id": artikelid},
-                                    "bestellingidBestelling": {"id": editBestellingIdselect},
-                                    "id": id,
-                                    "prijs": prijs
-
-                                }),
-                                success: function (data, textStatus, jqXHR) {
-                                    alert('bestelregel has been updated');
-                                    var table = $('#bestelregel').dataTable();
-                                    table.api().ajax.reload();
-                                    updateBestellingTotaalPrijs(editBestellingIdselect);
-                                }});
-                            closeBestelregelEditForm();
-                        }
-                    </script>
-                    <!---------------------------------------------------------------------------------------DELETE bestelregel -->
-                    <script>
-
-                        function deleteBestelregel(data) {
-
-                            var bestellingId = data.bestellingidBestelling.id.valueOf();
-
-                            var retVal = confirm("Do you want to continue ?");
-                            if (retVal === true) {
-                                $.ajax({
-                                    type: 'DELETE',
-                                    contentType: 'application/json',
-                                    url: 'http://localhost:8080/workshop3LO/webresources/bestelregel/' + data.id.valueOf(),
-                                    dataType: "json"
-                                            //                                        data: JSON.stringify({
-                                            //                                            "id": data.id.valueOf()
-                                            //                                            "naam": naam,
-                                            //                                            "prijs": prijs,
-                                            //                                            "voorraad": voorraad
-
-                                    ,
-                                    success: function (data, textStatus, jqXHR) {
-                                        alert('bestelregel deleted successfully');
-                                        var table = $('#bestelregel').dataTable();
-                                        table.api().ajax.reload();
-                                        updateBestellingTotaalPrijs(bestellingId);
-                                    }});
-
-                            } else {
-                                alert("User does not want to continue!");
-
-                            }
-
-                        }
-                    </script>
-                </div>
-            </div>
-
-            <!-- Container (Address Section) -->                             
-
-            <div id="address" class="container-fluid text-center">
-                <h2>Address</h2>
-                <h4>De adressen</h4>
-                <br>
-                <div class="header">
-
-
-                    <!--         <input type="text" id="searchKey"/>
-                                <button id="btnSearch">Search</button>-->
-                    <button id="btnAddArtikel" onclick="openAddAddressForm()">Add New </button>
-
-                    <table id="Address" class="display" width="100%">
-
-                    </table>
-
-
-
-                </div>
-
-
-
-                <!---------------------------------------------------------------------------------ADD Address form   -->
-                <div id = "addressAddpopup">
-                    <div class="form-popupadres" id="addAddressForm" >
-                        <form  id="addressform" class="form-containeradres"  >
-
-                            <h1>Voeg Address toe</h1>
-
-                            <label for="addressType" ><b>Address Type</b></label>
-                            <select id="addressTypeselect">
-                                <option value="POSTADRES">POSTADRES</option>
-                                <option value="FACTUURADRES">FACTUURADRES</option>
-                                <option value="BEZORGADRES">BEZORGADRES</option>
-                            </select><br>
-                            <label for="huisNummer" ><b>Huis Nummer</b></label>
-                            <input id="huisNummer" type="text" placeholder="voer huisNummer in" name="huisNummer"><br>
-
-                            <label for="postCode" >postCode</label>
-                            <input id="postCode" type="text" placeholder="voer postCode in" name="postCode" required><br>
-
-                            <label for="straatNaam" ><b>straatNaam</b></label>
-                            <input id="straatNaam" type="text" placeholder="voer straatNaam in" name="straatNaam" required><br>
-
-                            <label for="toevoeging" ><b>toevoeging</b></label>
-                            <input id="toevoeging" type="text" placeholder="voer toevoeging in" name="toevoeging" required><br>
-
-                            <label for="woonplaats" ><b>woonplaats</b></label>
-                            <input id="woonplaats" type="text" placeholder="voer woonplaats in" name="woonplaats" required><br>
-
-                            <label for="klantId" ><b>klantId</b></label>
-                            <select id="klantIdselect"></select><br>
-
-                            <button type="button" class="btn" onclick="saveAddressForm(document.getElementById('addressTypeselect').value, document.getElementById('huisNummer').value, document.getElementById('postCode').value, document.getElementById('straatNaam').value, document.getElementById('toevoeging').value, document.getElementById('woonplaats').value, document.getElementById('klantIdselect').value)">save</button>
-                            <button type="button" class="btn cancel" onclick="closeAddAddressForm()">Close</button>
-                        </form>
-                    </div>
-
-                    <script>
-                        function openAddAddressForm() {
-
-                            $.ajax({
-                                type: 'GET',
-                                contentType: 'application/json',
-                                url: 'http://localhost:8080/workshop3LO/webresources/klant',
-                                dataType: "json",
-
-                                success: function (data, textStatus, jqXHR) {
-
-                                    var select = document.getElementById("klantIdselect");
-                                    for (index in data) {
-                                        select.options[select.options.length] = new Option(data[index].id + ' ' + data[index].achternaam);
-                                    }
-
-                                }});
-                            document.getElementById("addressform").reset();
-                            document.getElementById("addAddressForm").style.display = "block";
-                        }
-
-                        function closeAddAddressForm() {
-                            document.getElementById("addAddressForm").style.display = "none";
-                        }
-                        function saveAddressForm(addressTypeselect, huisNummer, postCode, straatNaam, toevoeging, woonplaats, klantIdselect) {
-                            var res = klantIdselect.split(" ");
-                            var klantid = res[0];
-                            $.ajax({
-                                type: 'POST',
-                                contentType: 'application/json',
-                                url: 'http://localhost:8080/workshop3LO/webresources/adres',
-                                dataType: "json",
-                                data: JSON.stringify({
-                                    "adresType": addressTypeselect,
-                                    "huisnummer": huisNummer,
-                                    "id": null,
-                                    "klantidKlant": {"id": klantid},
-                                    "postcode": postCode,
-                                    "straatnaam": straatNaam,
-                                    "toevoeging": toevoeging,
-                                    "woonplaats": woonplaats
-
-
-
-
-
-
-                                }),
-                                success: function (data, textStatus, jqXHR) {
-                                    alert('Address created successfully');
-
+                                    alert('Address deleted successfully');
                                     var table = $('#Address').dataTable();
                                     table.api().ajax.reload();
                                 }});
-                            closeAddAddressForm();
-                        }
-                    </script>
-                </div>
 
-
-                <!----------------------------------------------------------------------------------edit Address   -->
-
-                <div id = "addressEditDeletepopup">
-                    <div class="form-popup" id="EditDeleteAddressRegelForm">
-                        <form  id="addressfrm2" class="form-container" >
-                            <h1>Voeg Address toe</h1>
-
-                            <label for="editId" ><b>Id</b></label>
-                            <input id="editId" type="number" placeholder="" name="editId" value=""  disabled=""><br>
-
-                            <label for="editaddressType" ><b>Address Type</b></label>
-                            <select id="editaddressType">
-                                <option value="POSTADRES">POSTADRES</option>
-                                <option value="FACTUURADRES">FACTUURADRES</option>
-                                <option value="BEZORGADRES">BEZORGADRES</option>
-                            </select><br>
-                            <label for="edithuisNummer" ><b>Huis Nummer</b></label>
-                            <input id="edithuisNummer" type="text" placeholder="voer huisNummer in" name="edithuisNummer"><br>
-
-                            <label for="editpostCode" >postCode</label>
-                            <input id="editpostCode" type="text" placeholder="voer postCode in" name="editpostCode" required><br>
-
-                            <label for="editstraatNaam" ><b>straatNaam</b></label>
-                            <input id="editstraatNaam" type="text" placeholder="voer straatNaam in" name="editstraatNaam" required><br>
-
-                            <label for="toevoeging" ><b>toevoeging</b></label>
-                            <input id="edittoevoeging" type="text" placeholder="voer toevoeging in" name="edittoevoeging" required><br>
-
-                            <label for="editwoonplaats" ><b>woonplaats</b></label>
-                            <input id="editwoonplaats" type="text" placeholder="voer woonplaats in" name="editwoonplaats" required><br>
-
-                            <label for="editklantId" ><b>klantId</b></label>
-                            <input  id="editklantId" type="number"  disabled><br>
-
-                            <button type="button" class="btn" onclick="editAddressForm(document.getElementById('editId').value, document.getElementById('editaddressType').value, document.getElementById('edithuisNummer').value, document.getElementById('editpostCode').value, document.getElementById('editstraatNaam').value, document.getElementById('edittoevoeging').value, document.getElementById('editwoonplaats').value, document.getElementById('editklantId').value)">save</button>
-                            <button type="button" class="btn cancel" onclick="closeAddressEditForm()">Close</button>
-                        </form>
-                    </div>
-
-                    <script>
-                        function openAddressEditForm(data) {
-                            document.getElementById("addressfrm2").reset();
-                            $('#editId').attr('value', data.id.valueOf());
-                            $('#editaddressType').attr('value', data.adresType.valueOf());
-                            $('#edithuisNummer').attr('value', data.huisnummer.valueOf());
-                            $('#editpostCode').attr('value', data.postcode.valueOf());
-                            $('#editstraatNaam').attr('value', data.straatnaam.valueOf());
-                            $('#edittoevoeging').attr('value', data.toevoeging.valueOf());
-                            $('#editwoonplaats').attr('value', data.woonplaats.valueOf());
-                            $('#editklantId').attr('value', data.klantidKlant.id.valueOf());
-
-
-                            document.getElementById("addressfrm2").reset();
-                            document.getElementById("EditDeleteAddressRegelForm").style.display = "block";
-                        }
-
-                        function closeAddressEditForm() {
-                            document.getElementById("EditDeleteAddressRegelForm").style.display = "none";
-                        }
-                        function editAddressForm(id, editaddressType, edithuisNummer, editpostCode, editstraatNaam, edittoevoeging, editwoonplaats, editklantId) {
-
-                            $.ajax({
-                                type: 'PUT',
-                                contentType: 'application/json',
-                                url: 'http://localhost:8080/workshop3LO/webresources/adres/' + id,
-                                dataType: "json",
-                                data: JSON.stringify({
-                                    "adresType": editaddressType,
-                                    "huisnummer": edithuisNummer,
-                                    "id": id,
-                                    "klantidKlant": {"id": editklantId},
-                                    "postcode": editpostCode,
-                                    "straatnaam": editstraatNaam,
-                                    "toevoeging": edittoevoeging,
-                                    "woonplaats": editwoonplaats
-
-                                }),
-                                success: function (data, textStatus, jqXHR) {
-                                    alert('Address has been updated');
-                                    var table = $('#Address').dataTable();
-                                    table.api().ajax.reload();
-                                }});
-                            closeAddressEditForm();
-                        }
-                    </script>
-                    <!---------------------------------------------------------------------------------------DELETE Address -->
-                    <script>
-
-                        function deleteAddress(data) {
-
-                            var retVal = confirm("Do you want to continue ?");
-                            if (retVal === true) {
-                                $.ajax({
-                                    type: 'DELETE',
-                                    contentType: 'application/json',
-                                    url: 'http://localhost:8080/workshop3LO/webresources/adres/' + data.id.valueOf(),
-                                    dataType: "json"
-                                            //                                        data: JSON.stringify({
-                                            //                                            "id": data.id.valueOf()
-                                            //                                            "naam": naam,
-                                            //                                            "prijs": prijs,
-                                            //                                            "voorraad": voorraad
-
-                                    ,
-                                    success: function (data, textStatus, jqXHR) {
-                                        alert('Address deleted successfully');
-                                        var table = $('#Address').dataTable();
-                                        table.api().ajax.reload();
-                                    }});
-
-                            } else {
-                                alert("User does not want to continue!");
-
-                            }
+                        } else {
+                            alert("User does not want to continue!");
 
                         }
-                    </script>
-                </div>
 
-
+                    }
+                </script>
             </div>
-            <!-- Container (Contact Section) -->
-            <div id="contact" class="container-fluid bg-grey">
-                <h2 class="text-center">CONTACT</h2>
-                <div class="row">
-                    <div class="col-sm-5">
-                        <p>Contact us and we'll get back to you within 24 hours.</p>
-                        <p><span class="glyphicon glyphicon-map-marker"></span> Lutjebroek, NL</p>
-                        <p><span class="glyphicon glyphicon-phone"></span> +31 1515151515</p>
-                        <p><span class="glyphicon glyphicon-envelope"></span> boer@piet.nl</p>
-                    </div>
-                    <div class="col-sm-7 slideanim">
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
-                            </div>
+
+
+        </div>
+        <!-- Container (Contact Section) -->
+        <div id="contact" class="container-fluid bg-grey">
+            <h2 class="text-center">CONTACT</h2>
+            <div class="row">
+                <div class="col-sm-5">
+                    <p>Contact us and we'll get back to you within 24 hours.</p>
+                    <p><span class="glyphicon glyphicon-map-marker"></span> Lutjebroek, NL</p>
+                    <p><span class="glyphicon glyphicon-phone"></span> +31 1515151515</p>
+                    <p><span class="glyphicon glyphicon-envelope"></span> boer@piet.nl</p>
+                </div>
+                <div class="col-sm-7 slideanim">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
                         </div>
-                        <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
-                        <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <button class="btn btn-default pull-right" type="submit">Send</button>
-                            </div>
+                        <div class="col-sm-6 form-group">
+                            <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                        </div>
+                    </div>
+                    <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <button class="btn btn-default pull-right" type="submit">Send</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
 
-            <footer class="container-fluid text-center">
-                <a href="#mainPage" title="To Top">
-                    <span class="glyphicon glyphicon-chevron-up"></span>
-                </a>
-                <p> Made By LOP@RS4</p>
-            </footer>
+        <footer class="container-fluid text-center">
+            <a href="#mainPage" title="To Top">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+            <p> Made By LOP@RS4</p>
+        </footer>
 
-            <script>
-                $(document).ready(function () {
-                    // Add smooth scrolling to all links in navbar + footer link
-                    $(".navbar a, footer a[href='#mainPage']").on('click', function (event) {
-                        // Make sure this.hash has a value before overriding default behavior
-                        if (this.hash !== "") {
-                            // Prevent default anchor click behavior
-                            event.preventDefault();
-                            // Store hash
-                            var hash = this.hash;
-                            // Using jQuery's animate() method to add smooth page scroll
-                            // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-                            $('html, body').animate({
-                                scrollTop: $(hash).offset().top
-                            }, 900, function () {
+        <script>
+            $(document).ready(function () {
+                // Add smooth scrolling to all links in navbar + footer link
+                $(".navbar a, footer a[href='#mainPage']").on('click', function (event) {
+                    // Make sure this.hash has a value before overriding default behavior
+                    if (this.hash !== "") {
+                        // Prevent default anchor click behavior
+                        event.preventDefault();
+                        // Store hash
+                        var hash = this.hash;
+                        // Using jQuery's animate() method to add smooth page scroll
+                        // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+                        $('html, body').animate({
+                            scrollTop: $(hash).offset().top
+                        }, 900, function () {
 
-                                // Add hash (#) to URL when done scrolling (default click behavior)
-                                window.location.hash = hash;
-                            });
-                        } // End if
-                    });
-                    $(window).scroll(function () {
-                        $(".slideanim").each(function () {
-                            var pos = $(this).offset().top;
-                            var winTop = $(window).scrollTop();
-                            if (pos < winTop + 600) {
-                                $(this).addClass("slide");
-                            }
+                            // Add hash (#) to URL when done scrolling (default click behavior)
+                            window.location.hash = hash;
                         });
+                    } // End if
+                });
+                $(window).scroll(function () {
+                    $(".slideanim").each(function () {
+                        var pos = $(this).offset().top;
+                        var winTop = $(window).scrollTop();
+                        if (pos < winTop + 600) {
+                            $(this).addClass("slide");
+                        }
                     });
-                })
-            </script>
+                });
+            })
+        </script>
 
     </body>
 </html>
