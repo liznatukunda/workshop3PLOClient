@@ -88,7 +88,7 @@
 
                         {title: "id ", data: "id", className: 'dt-body-center'},
                         {title: "naam", data: "naam", className: 'dt-body-center'},
-                        {title: "prijs", data: "prijs", className: 'dt-body-center'},
+                        {title: "prijs", data: "prijs", "decimalPlaces": 2, className: 'dt-body-center'},
                         {title: "voorraad", data: "voorraad", className: 'dt-body-center'},
                         {title: "Edit", data: null,
                             render: function (data, type, full) {
@@ -186,7 +186,7 @@
                     },
                     columns: [
                         {title: "id ", data: "id", className: 'dt-body-center'},
-                        {title: "Totaalprijs", data: "prijs", className: 'dt-body-center'},
+                        {title: "Totaalprijs", data: "prijs", "decimalPlaces": 2, className: 'dt-body-center'},
                         {title: "klant", data: null,
                             "render": function (data, type, row) {
                                 return data.klantidKlant.voornaam + ' ' + data.klantidKlant.tussenvoegsel + ' ' + data.klantidKlant.achternaam;
@@ -240,7 +240,7 @@
                     columns: [
                         {title: "id ", data: "id", className: 'dt-body-center'},
                         {title: "Aantal", data: "aantal", className: 'dt-body-center'},
-                        {title: "Prijs", data: "prijs", className: 'dt-body-center'},
+                        {title: "Prijs", data: "prijs", "decimalPlaces": 2, className: 'dt-body-center'},
                         {title: "Artikel", data: "artikelidArtikel.naam", className: 'dt-body-center'},
                         {title: "Bestelling Id", data: "bestellingidBestelling.id", className: 'dt-body-center'},
                         {title: "Edit", data: null,
@@ -624,7 +624,7 @@
                             <input id="naam" type="text" placeholder="voer naam in" name="naam" required  oninvalid="this.setCustomValidity('Voer artikelnaam in ')"  oninput="this.setCustomValidity('')">
 
                             <label for="prijs"><b>Prijs</b></label>
-                            <input type="number" step="0.01" id="prijs" placeholder="voer prijs in" name="prijs" required min="0" oninvalid="this.setCustomValidity('Voer prijs in')"  oninput="this.setCustomValidity('')">
+                            <input type="number" step="0.01"  pattern="^\d+(?:\.\d{1,2})?" id="prijs" placeholder="voer prijs in" name="prijs" required min="0" oninvalid="this.setCustomValidity('Voer prijs in')"  oninput="this.setCustomValidity('')">
 
                             <label for="voorraad"><b>Voorraad</b></label>
                             <input type="number" id="voorraad" placeholder="voer voorraad in" name="voorraad" required min="0" oninvalid="this.setCustomValidity('Voer voorraad in')"  oninput="this.setCustomValidity('')">
@@ -1552,9 +1552,9 @@
                     function editBestelregelForm(id, editAantal, editArtikelselect, editBestellingIdselect) {
 
                         var res = editArtikelselect.split(" ");
-                        var artikelid = res[0];
+                        var artikelid = res[1];
                         var prijs = res[3] * editAantal;
-
+                           
                         $.ajax({
                             type: 'PUT',
                             contentType: 'application/json',
