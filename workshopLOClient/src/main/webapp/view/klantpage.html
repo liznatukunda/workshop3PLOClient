@@ -105,7 +105,7 @@ and open the template in the editor.
                 $("#artikel").on("click", 'a', function () {
                     var data1 = table.row($(this).parents('tr')).data();
                     addBestelling();
-                    openAddBestelregelForm(data1);
+                    openAddBestelregelForm();
                     document.getElementById('BestelRegel').scrollIntoView();
                 });
 
@@ -386,6 +386,8 @@ and open the template in the editor.
 
                             var table = $('#bestelling').dataTable();
                             table.api().ajax.reload();
+                            openAddBestelregelForm();
+                    document.getElementById('BestelRegel').scrollIntoView();
                         }});
 
                 }
@@ -533,7 +535,7 @@ and open the template in the editor.
 
 
                 <script>
-                    function openAddBestelregelForm(artikel) {
+                    function openAddBestelregelForm() {
 
                         $("#artikelselect").empty();
                         $("#bestellingIdselect").empty();
@@ -547,13 +549,13 @@ and open the template in the editor.
                             success: function (data, textStatus, jqXHR) {
 
                                 var select = document.getElementById("artikelselect");
-
+                               
                                 for (index in data) {
                                     select.options[select.options.length] = new Option('id: ' + data[index].id + ' euro: ' + data[index].prijs + ' naam: ' + data[index].naam + ' voorraad: ' + data[index].voorraad);
-                                    if (data[index].id === artikel.id) {
-                                        alert(data[index].id + ' ' + index);
-                                        select.selectedIndex = index;
-                                    }
+                                    
+                                    
+                                       
+                                
                                 }
 
                             }});

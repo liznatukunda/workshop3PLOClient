@@ -1276,8 +1276,9 @@
                         if (document.getElementById('bestelregelform').checkValidity()) {
                             var res2 = document.getElementById('artikelselect').value.split(" ");
                             var artikelvoorraad = res2[7];
-                            alert(artikelvoorraad  +"  aantal: "+ document.getElementById('aantal').value  );
-                            if (document.getElementById('aantal').value <= artikelvoorraad) {
+                            var regelaantal=document.getElementById('aantal').value;
+                            alert(artikelvoorraad  +"  aantal: "+   document.getElementById('aantal').value +' ' +regelaantal);
+                            if (artikelvoorraad >= regelaantal) {
                                 artikelVoorraadAanpassen(document.getElementById('aantal').value, document.getElementById('artikelselect').value);
                                 saveBestelRegelForm(document.getElementById('aantal').value, document.getElementById('artikelselect').value, document.getElementById('bestellingIdselect').value);
 
@@ -1456,8 +1457,8 @@
                         <label for="id" ><b>id</b></label>
                         <input id="editid" type="number" value="" name="id" disabled>
 
-                        <label for="aantal" ><b>Aantal</b></label>
-                        <input id="editAantal" type="number" placeholder="voer aantal in" name="aantal" required min="0" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
+                        <label for="editaantal" ><b>Aantal</b></label>
+                        <input id="editAantal" type="number" placeholder="voer aantal in" name="editaantal" required min="0" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
 
 
                         <label for="artikel" ><b>Artikel</b></label>
@@ -1477,7 +1478,7 @@
                             var res2 = document.getElementById('editArtikelselect').value.split(" ");
                             var artikelvoorraad = res2[7];
                             alert( document.getElementById('editAantal').value +' '+ artikelvoorraad);
-                            if (document.getElementById('editAantal').value <= artikelvoorraad) {
+                            if (document.getElementById('editAantal').value < artikelvoorraad) {
                                 artikelVoorraadAanpassen(document.getElementById('editAantal').value,document.getElementById('editArtikelselect').value );
                                 editBestelregelForm(document.getElementById('editid').value, document.getElementById('editAantal').value, document.getElementById('editArtikelselect').value, document.getElementById('editBestellingIdselect').value);
                             }else{
