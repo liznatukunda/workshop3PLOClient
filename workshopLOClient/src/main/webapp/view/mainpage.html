@@ -16,9 +16,7 @@
         <link rel="stylesheet" type="text/css" href="../js/datatables.css"/>
         <link rel="stylesheet" type="text/css" href="../js/dataTables.jqueryui.css"/>
         <link rel="stylesheet" href="../css/styles.css" type="text/css">
-        <script>
-    $.ajaxSetup({ cache: false });
-    </script>
+      
         <!--------------------------------------------------------------------------------------------------VIEW accountS    -->
         <script type="text/javascript">
             $(document).ready(function () {
@@ -186,7 +184,7 @@
                     },
                     columns: [
                         {title: "id ", data: "id", className: 'dt-body-center'},
-                        {title: "Totaalprijs", data: "prijs", "decimalPlaces": 2, className: 'dt-body-center'},
+                        {title: "Totaalprijs", data: "prijs", "decimalPlaces": '2', className: 'dt-body-center'},
                         {title: "klant", data: null,
                             "render": function (data, type, row) {
                                 return data.klantidKlant.voornaam + ' ' + data.klantidKlant.tussenvoegsel + ' ' + data.klantidKlant.achternaam;
@@ -411,10 +409,10 @@
                         <h1>Voeg Account toe</h1>
 
                         <label for="usernaam" ><b>Username</b></label>
-                        <input id="usernaam" type="text" placeholder="voer usernaam in" name="usernaam" required  minlength=4 oninvalid="this.setCustomValidity('Voer Usernaam in ')"  oninput="this.setCustomValidity('')">
+                        <input id="usernaam" type="text" placeholder="voer usernaam in" name="usernaam" maxlength="45" required  minlength=4 oninvalid="this.setCustomValidity('Voer Usernaam in ')"  oninput="this.setCustomValidity('')">
 
                         <label for="password" ><b>Password</b></label>
-                        <input id="password" type="password" placeholder="voer Password in" name="password" required  minlength=4 oninvalid="this.setCustomValidity('Voer wachtwoord in ')"  oninput="this.setCustomValidity('')">
+                        <input id="password" type="password" placeholder="voer Password in" name="password" maxlength="56" required  minlength=4 oninvalid="this.setCustomValidity('Voer wachtwoord in ')"  oninput="this.setCustomValidity('')">
 
                         <label for="rol" ><b>Rol</b></label>
                         <select id="Rol" >
@@ -490,10 +488,10 @@
                         <input id="accounteditid" type="number" placeholder="" name="id" required value="" disabled="" >
 
                         <label for="usernaam" ><b>Username</b></label>
-                        <input id="accounteditusernaam" type="text" placeholder="" name="usernaam" value="" required minlength=4 oninvalid="this.setCustomValidity('Voer Usernaam in ')"  oninput="this.setCustomValidity('')">
+                        <input id="accounteditusernaam" type="text" placeholder="" name="usernaam" value="" maxlength="45"required minlength=4 oninvalid="this.setCustomValidity('Voer Usernaam in ')"  oninput="this.setCustomValidity('')">
 
                         <label for="password" ><b>Password</b></label>
-                        <input id="accounteditpassword" type="password" placeholder="" name="password" value="" required minlength=4 oninvalid="this.setCustomValidity('Voer wachtwoord in ')"  oninput="this.setCustomValidity('')">
+                        <input id="accounteditpassword" type="password" placeholder="" name="password" value="" maxlength="56"required minlength=4 oninvalid="this.setCustomValidity('Voer wachtwoord in ')"  oninput="this.setCustomValidity('')">
 
                         <label for="rol" ><b>Rol</b></label>
                         <select id="accounteditRol"  disabled>
@@ -621,13 +619,13 @@
                             <h1>Voeg Artikel toe</h1>
 
                             <label for="naam" ><b>Naam</b></label>
-                            <input id="naam" type="text" placeholder="voer naam in" name="naam" required  oninvalid="this.setCustomValidity('Voer artikelnaam in ')"  oninput="this.setCustomValidity('')">
+                            <input id="naam" type="text" placeholder="voer naam in" name="naam" required maxlength="45"  oninvalid="this.setCustomValidity('Voer artikelnaam in ')"  oninput="this.setCustomValidity('')">
 
                             <label for="prijs"><b>Prijs</b></label>
-                            <input type="number" step="0.01"  pattern="^\d+(?:\.\d{1,2})?" id="prijs" placeholder="voer prijs in" name="prijs" required min="0" oninvalid="this.setCustomValidity('Voer prijs in')"  oninput="this.setCustomValidity('')">
+                            <input type="number" step="0.01"  pattern="^\d+(?:\.\d{1,2})?" max="999.99" id="prijs"  placeholder="voer prijs in" name="prijs" required min="0" oninvalid="this.setCustomValidity('Voer prijs in')"  oninput="this.setCustomValidity('')">
 
                             <label for="voorraad"><b>Voorraad</b></label>
-                            <input type="number" id="voorraad" placeholder="voer voorraad in" name="voorraad" required min="0" oninvalid="this.setCustomValidity('Voer voorraad in')"  oninput="this.setCustomValidity('')">
+                            <input type="number" id="voorraad" placeholder="voer voorraad in" name="voorraad" max="9999999" required min="0" oninvalid="this.setCustomValidity('Voer voorraad in')"  oninput="this.setCustomValidity('')">
 
                             <!--                            <button type="button" class="btn" onclick="saveArtikelForm(document.getElementById('naam').value, document.getElementById('prijs').value, document.getElementById('voorraad').value)">save</button>
                                                         <button type="button" class="btn cancel" onclick="closeAddForm()">Close</button>-->
@@ -695,13 +693,13 @@
                             <input id="artikeleditid" type="number" placeholder="" name="id" required value="" disabled="" >
 
                             <label for="naam" ><b>Naam</b></label>
-                            <input id="artikeleditnaam" type="text" placeholder="" name="naam" value="" required  oninvalid="this.setCustomValidity('Voer artikelnaam in ')"  oninput="this.setCustomValidity('')">
+                            <input id="artikeleditnaam" type="text" placeholder="" name="naam" value="" maxlength="45" required  oninvalid="this.setCustomValidity('Voer artikelnaam in ')"  oninput="this.setCustomValidity('')">
 
                             <label for="prijs"><b>Prijs</b></label>
-                            <input type="number" step="0.01" id="artikeleditprijs" placeholder="" name="prijs" value="" required min="0"  oninvalid="this.setCustomValidity('Voer prijs in ')"  oninput="this.setCustomValidity('')">
+                            <input type="number" step="0.01" id="artikeleditprijs" placeholder="" name="prijs" max="999.99" value="" required min="0"  oninvalid="this.setCustomValidity('Voer prijs in ')"  oninput="this.setCustomValidity('')">
 
                             <label for="voorraad"><b>Voorraad</b></label>
-                            <input type="number" id="artikeleditvoorraad" placeholder="" name="voorraad" value="" required min="0"  oninvalid="this.setCustomValidity('Voer voorraad in ')"  oninput="this.setCustomValidity('')">
+                            <input type="number" id="artikeleditvoorraad" placeholder="" name="voorraad" max="9999999"value="" required min="0"  oninvalid="this.setCustomValidity('Voer voorraad in ')"  oninput="this.setCustomValidity('')">
 
                             <button type="button" class="btn" onclick="validateEditArtikel()">save</button>
                             <button type="button" class="btn cancel" onclick="closeEditArtikelForm()">Close</button>
@@ -1129,7 +1127,7 @@
                         }
 
                         function closeAddBestellingForm() {
-                            
+
                             document.getElementById("addBestellingForm").style.display = "none";
                         }
                         function saveBestellingForm(totaalprijs, klant) {
@@ -1258,7 +1256,7 @@
                         <h1>Voeg bestelregel toe</h1>
 
                         <label for="aantal" ><b>Aantal</b></label>
-                        <input id="aantal" type="number" placeholder="voer aantal in" name="aantal" required min="0" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
+                        <input id="aantal" type="number" placeholder="voer aantal in" max="9999999" name="aantal" required min="0" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
 
                         <label for="artikel" ><b>Artikel</b></label>
                         <select id="artikelselect" ></select>
@@ -1276,8 +1274,8 @@
                         if (document.getElementById('bestelregelform').checkValidity()) {
                             var res2 = document.getElementById('artikelselect').value.split(" ");
                             var artikelvoorraad = (Number)(res2[7]);
-                            var regelaantal=(Number)(document.getElementById('aantal').value);
-                           // alert(artikelvoorraad  +"  aantal: "+   document.getElementById('aantal').value +' ' +regelaantal);
+                            var regelaantal = (Number)(document.getElementById('aantal').value);
+                            // alert(artikelvoorraad  +"  aantal: "+   document.getElementById('aantal').value +' ' +regelaantal);
                             if (artikelvoorraad >= regelaantal) {
                                 artikelVoorraadAanpassen(document.getElementById('aantal').value, res2);
                                 saveBestelRegelForm(document.getElementById('aantal').value, document.getElementById('artikelselect').value, document.getElementById('bestellingIdselect').value);
@@ -1299,8 +1297,8 @@
 
                 <script>
                     function openAddBestelregelForm() {
-                       $("#artikelselect").empty();
-                       $("#bestellingIdselect").empty();
+                        $("#artikelselect").empty();
+                        $("#bestellingIdselect").empty();
                         $.ajax({
                             type: 'GET',
                             cache: false,
@@ -1313,7 +1311,7 @@
                                 var select = document.getElementById("artikelselect");
 
                                 for (index in data) {
-                                    select.options[select.options.length] = new Option ( 'id: ' + data[index].id + ' euro: ' + data[index].prijs + ' naam: ' + data[index].naam + ' voorraad: ' + data[index].voorraad);
+                                    select.options[select.options.length] = new Option('id: ' + data[index].id + ' euro: ' + data[index].prijs + ' naam: ' + data[index].naam + ' voorraad: ' + data[index].voorraad);
                                 }
 
                             }});
@@ -1338,14 +1336,14 @@
                     }
 
                     function closeAddBestelregelForm() {
-                       
+
                         document.getElementById("addBestelregelForm").style.display = "none";
                     }
                     function saveBestelRegelForm(aantal, artikel, bestellingId) {
 
                         var res = artikel.split(" ");
                         var artikelid = res[1];
-                        var prijs = res[3] * aantal;
+                        var prijs = parseFloat(res[3] * aantal).toFixed(2);
                         $.ajax({
                             type: 'POST',
                             contentType: 'application/json',
@@ -1356,7 +1354,7 @@
                                 "artikelidArtikel": {"id": artikelid},
                                 "bestellingidBestelling": {"id": bestellingId},
                                 "id": null,
-                                "prijs": prijs
+                                "prijs": prijs 
 
 
 
@@ -1379,7 +1377,7 @@
 
                 <script>
                     function artikelVoorraadAanpassen(aantal, artikelarray) {
-                       
+
                         var id = artikelarray[1];
                         var prijs = artikelarray[3];
                         var naam = artikelarray[5];
@@ -1397,7 +1395,7 @@
 
                             }),
                             success: function (data, textStatus, jqXHR) {
-                          //      alert('Artikel has been updated');
+                                //      alert('Artikel has been updated');
                                 var table = $('#artikel').dataTable();
                                 table.api().ajax.reload();
                             }});
@@ -1408,43 +1406,67 @@
 
                 <script>
                     function  updateBestellingTotaalPrijs(bestellingId) {
+                        var totaalprijs = 0;
+                        var klantid;
+                        $.ajax({
+                            "url": 'http://localhost:8080/workshop3LO/webresources/bestelling/' + bestellingId,
+                            "type": 'GET',
+                            "cache": false,
+                            "dataType": 'json',
+                            "dataSrc": "",
+                            async: false
+
+
+                            ,
+                            success: function (data, textStatus, jqXHR) {
+                                klantid = data.klantidKlant.id.valueOf();
+                               
+
+                            }
+                        });
                         $.ajax({
                             "url": 'http://localhost:8080/workshop3LO/webresources/bestelregel/search/' + bestellingId,
                             "type": 'GET',
                             "cache": false,
                             "dataType": 'json',
-                            "dataSrc": ""
+                            "dataSrc": "",
+                            async: false
 
 
                             ,
                             success: function (data, textStatus, jqXHR) {
-                                var totaalprijs = 0;
+                                
                                 for (var i = 0; i < data.length; i++) {
                                     totaalprijs += data[i].prijs;
 
                                 }
 
-                                var klantid = data[0].bestellingidBestelling.klantidKlant.id.valueOf();
-                                $.ajax({
-                                    type: 'PUT',
-                                    contentType: 'application/json',
-                                    url: 'http://localhost:8080/workshop3LO/webresources/bestelling/' + bestellingId,
-                                    dataType: "json",
-                                    data: JSON.stringify({
-                                        "id": bestellingId,
-                                        "klantidKlant": {"id": klantid},
-                                        "prijs": totaalprijs
+                            }
+
+                        });
+                        totaalprijs=parseFloat(totaalprijs).toFixed(2);  
+                        $.ajax({
+                            type: 'PUT',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/bestelling/' + bestellingId,
+                            dataType: "json",
+                            async: false,
+                            data: JSON.stringify({
+                                "id": bestellingId,
+                                "klantidKlant": {"id": klantid},
+                                "prijs": totaalprijs
 
 
-                                    }),
-                                    success: function (data, textStatus, jqXHR) {
-                               //         alert('bestelling has been updated');
-                                        var table = $('#bestelling').dataTable();
-                                        table.api().ajax.reload();
-                                    }});
-
+                            }),
+                            success: function (data, textStatus, jqXHR) {
+                                //                     alert('bestelling has been updated');
+                              
+                                var table = $('#bestelling').dataTable();
+                                table.api().ajax.reload();
                             }});
-                    }
+
+
+                    };
                 </script>
             </div>
             <!----------------------------------------------------------------------------------EDIT  bestelregel -->
@@ -1457,10 +1479,10 @@
                         <label for="id" ><b>id</b></label>
                         <input id="editid" type="number" value="" name="id" disabled>
 
-                         <input id="oldregel" type="hidden" value="" name="old" disabled>
-                        
+                        <input id="oldregel" type="hidden" value="" name="old" disabled>
+
                         <label for="editaantal" ><b>Aantal</b></label>
-                        <input id="editAantal" type="number" placeholder="voer aantal in" name="editaantal" required min="0" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
+                        <input id="editAantal" type="number" placeholder="voer aantal in" name="editaantal" required min="0" max="9999999" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
 
 
                         <label for="artikel" ><b>Artikel</b></label>
@@ -1479,18 +1501,19 @@
                         if (document.getElementById('bestelRegelfrm2').checkValidity()) {
                             var res2 = document.getElementById('editArtikelselect').value.split(" ");
                             var artikelvoorraad = (Number)(res2[7]);
-                            var editregelaantal=(Number)(document.getElementById('editAantal').value);
-                           
+                            var editregelaantal = (Number)(document.getElementById('editAantal').value);
+
                             if (editregelaantal <= artikelvoorraad) {
-                                 var artikelarray = artikelVoorraadVerhogen(document.getElementById('oldregel').value);
-                                if (artikelarray[1] === res2[1]){
-                                    res2[7]=(Number)(artikelarray[7]) + (Number)(artikelarray[9])
+                                var artikelarray = artikelVoorraadVerhogen(document.getElementById('oldregel').value);
+                                if (artikelarray[1] === res2[1]) {
+                                    res2[7] = (Number)(artikelarray[7]) + (Number)(artikelarray[9]);
                                 }
-                                artikelVoorraadAanpassen(editregelaantal,res2 );
+                                artikelVoorraadAanpassen(editregelaantal, res2);
                                 editBestelregelForm(document.getElementById('editid').value, document.getElementById('editAantal').value, document.getElementById('editArtikelselect').value, document.getElementById('editBestellingIdselect').value);
-                            }else{
+                            } else {
                                 alert('voorraad niet toereikend');
-                        }}else
+                            }
+                        } else
                         {
                             alert('ongeldige waarden');
 //                                document.getElementById('artikelform').querySelector('input[type="submit"]').click();
@@ -1503,11 +1526,11 @@
                 <script>
                     function openBestelregelForm(data) {
                         $("#editArtikelselect").empty();
-                         $("#editBestellingIdselect").empty();
+                        $("#editBestellingIdselect").empty();
                         $('#editid').attr('value', data.id.valueOf());
                         $('#editAantal').attr('value', data.aantal.valueOf());
                         $('#editPrijs').attr('value', data.prijs.valueOf());
-                           $('#oldregel').attr('value', ('artikelId: ' + data.artikelidArtikel.id.valueOf())+ ' naam: ' + data.artikelidArtikel.naam.valueOf()+ ' prijs: ' + data.artikelidArtikel.prijs.valueOf() + ' voorraad ' + data.artikelidArtikel.voorraad.valueOf()+ ' aantal: ' +data.aantal.valueOf()) ;
+                        $('#oldregel').attr('value', ('artikelId: ' + data.artikelidArtikel.id.valueOf()) + ' naam: ' + data.artikelidArtikel.naam.valueOf() + ' prijs: ' + data.artikelidArtikel.prijs.valueOf() + ' voorraad ' + data.artikelidArtikel.voorraad.valueOf() + ' aantal: ' + data.aantal.valueOf());
 
 
                         $.ajax({
@@ -1561,8 +1584,8 @@
 
                         var res = editArtikelselect.split(" ");
                         var artikelid = res[1];
-                        var prijs = res[3] * editAantal;
-                           
+                        var prijs = parseFloat(res[3] * editAantal).toFixed(2);
+
                         $.ajax({
                             type: 'PUT',
                             contentType: 'application/json',
@@ -1589,9 +1612,9 @@
                 <script>
 
                     function deleteBestelregel(data) {
-                       // alert (data.artikelidArtikel.id + ' ' + data.aantal);
-                      var artikel = ('artikelId: ' + data.artikelidArtikel.id.valueOf()+ ' naam: ' + data.artikelidArtikel.naam.valueOf()+ ' prijs: ' + data.artikelidArtikel.prijs.valueOf() + ' voorraad ' + data.artikelidArtikel.voorraad.valueOf()+ ' aantal: ' +data.aantal.valueOf());
-                      artikelVoorraadVerhogen(artikel);
+                        // alert (data.artikelidArtikel.id + ' ' + data.aantal);
+                        var artikel = ('artikelId: ' + data.artikelidArtikel.id.valueOf() + ' naam: ' + data.artikelidArtikel.naam.valueOf() + ' prijs: ' + data.artikelidArtikel.prijs.valueOf() + ' voorraad ' + data.artikelidArtikel.voorraad.valueOf() + ' aantal: ' + data.aantal.valueOf());
+                        artikelVoorraadVerhogen(artikel);
                         var bestellingId = data.bestellingidBestelling.id.valueOf();
 
                         var retVal = confirm("Do you want to continue ?");
@@ -1622,7 +1645,7 @@
 
                     }
                 </script>
-                
+
                 <script>
                     function artikelVoorraadVerhogen(artikel) {
                         var artikelarray = artikel.split(" ");
@@ -1630,7 +1653,7 @@
                         var prijs = artikelarray[5];
                         var naam = artikelarray[3];
                         var voorraad = (Number)(artikelarray[7]) + (Number)(artikelarray[9]);
-                        
+
                         $.ajax({
                             type: 'PUT',
                             contentType: 'application/json',
@@ -1645,7 +1668,7 @@
 
                             }),
                             success: function (data, textStatus, jqXHR) {
-                  //              alert('Artikel has been updated');
+                                //              alert('Artikel has been updated');
                                 var table = $('#artikel').dataTable();
                                 table.api().ajax.reload();
                                 return artikelarray;

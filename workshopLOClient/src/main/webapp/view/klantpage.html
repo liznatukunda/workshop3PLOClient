@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Klant</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src = "../js/jquery-3.3.1.js"></script>
@@ -104,7 +104,7 @@ and open the template in the editor.
                 });
                 $("#artikel").on("click", 'a', function () {
                     var data1 = table.row($(this).parents('tr')).data();
-                    addBestelling();
+                    //  addBestelling();
                     openAddBestelregelForm();
                     document.getElementById('BestelRegel').scrollIntoView();
                 });
@@ -176,7 +176,7 @@ and open the template in the editor.
                     "lengthMenu": [[3, 5, 10, -1], [3, 5, 10, "All"]],
                     "scrollY": "400px",
                     textalign: "center",
-                    
+
                     ajax: {
                         "url": 'http://localhost:8080/workshop3LO/webresources/bestelregel/search/' + getBestellingId(),
                         "type": 'GET',
@@ -331,7 +331,31 @@ and open the template in the editor.
 
             </div>
         </div>
+        <!-- Container (About Section) -->
+        <div id="about" class="container-fluid">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h4>Boer Piet</h4><br>
+                    <p>Kaas is een zuivelproduct met een vaste structuur. Door het toevoegen van stremsel en zuursel worden de vaste stoffen in de melk (eiwitten, vetten en mineralen) gescheiden van het vocht (de wei). Voorts wordt zout en eventueel schimmels toegevoegd tijdens de bereiding van kaas. Het Nederlandse woord voor kaas stamt van het Latijnse caseus, dat dezelfde betekenis heeft.
+                        Kaas bevat, naast de hoofdbestanddelen dierlijk vet en eiwit, calcium en vitamines A, B en D. Studies hebben uitgewezen dat kaas waarschijnlijk gezond is voor de tanden. Kaas wordt een 'levend' voedsel genoemd omdat er miljoenen bacteriën in leven en vaak ook schimmels. In bepaalde kazen zoals de Mimolette en Stilton bevindt zich de kaasmijt die gaten en spleten in de kaas vreet. Een andere soort kaasmijt wordt gebruikt bij de productie van de kwarkkaas Milbenkäse of 'mijtkaas'. De kaasvlieg komt voor in Casu marzu.
+                        Kaas wordt gemaakt van de melk van bijna alle gedomesticeerde herbivoren, dat is in verreweg de meeste gevallen van koe-, geiten- en schapenmelk. Verder wordt kaas ook gemaakt van buffel-, paarden-, kamelenmelk, rendierenmelk en jakmelk.
 
+                    </p>
+
+                    <br><a class="btn btn-default btn-lg" href="#contact">Get in Touch</a>
+                </div>
+                <div class="col-sm-4">
+                    <span> <img src="../pics/generic.jpg" alt=""/></span>
+
+                </div>
+                <div>
+                    <video width="320" height="240" controls>
+                        <source src="../pics/Hoe wordt kaas gemaakt.mp4" type="video/mp4">
+                        Your browser does not support the <code>video</code> tag.
+                    </video>
+                </div>
+            </div>
+        </div>
 
         <!-- Container (Artikelen Section) -->
 
@@ -388,7 +412,7 @@ and open the template in the editor.
                             var table = $('#bestelling').dataTable();
                             table.api().ajax.reload();
                             openAddBestelregelForm();
-                    document.getElementById('BestelRegel').scrollIntoView();
+                            document.getElementById('BestelRegel').scrollIntoView();
                         }});
 
                 }
@@ -497,7 +521,7 @@ and open the template in the editor.
                         <h1>Voeg bestelregel toe</h1>
 
                         <label for="aantal" ><b>Aantal</b></label>
-                        <input id="aantal" type="number" placeholder="voer aantal in" name="aantal" required min="0" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
+                        <input id="aantal" type="number" placeholder="voer aantal in" name="aantal" required min="0" max="9999999" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
 
                         <label for="artikel" ><b>Artikel</b></label>
                         <select id="artikelselect" ></select>
@@ -515,7 +539,7 @@ and open the template in the editor.
                         if (document.getElementById('bestelregelform').checkValidity()) {
                             var res2 = document.getElementById('artikelselect').value.split(" ");
                             var artikelvoorraad = (Number)(res2[7]);
-                   //         alert(artikelvoorraad + "  aantal: " + document.getElementById('aantal').value);
+                            //         alert(artikelvoorraad + "  aantal: " + document.getElementById('aantal').value);
                             if (document.getElementById('aantal').value <= artikelvoorraad) {
                                 artikelVoorraadAanpassen(document.getElementById('aantal').value, res2);
                                 saveBestelRegelForm(document.getElementById('aantal').value, document.getElementById('artikelselect').value, document.getElementById('bestellingIdselect').value);
@@ -550,12 +574,12 @@ and open the template in the editor.
                             success: function (data, textStatus, jqXHR) {
 
                                 var select = document.getElementById("artikelselect");
-                               
+
                                 for (index in data) {
                                     select.options[select.options.length] = new Option('id: ' + data[index].id + ' euro: ' + data[index].prijs + ' naam: ' + data[index].naam + ' voorraad: ' + data[index].voorraad);
-                                     
-                                
-                                
+
+
+
                                 }
 
                             }});
@@ -588,7 +612,8 @@ and open the template in the editor.
 
                         var res = artikel.split(" ");
                         var artikelid = res[1];
-                        var prijs = res[3] * aantal;
+                        
+                        var prijs = parseFloat(res[3] * aantal).toFixed(2);
                         $.ajax({
                             type: 'POST',
                             contentType: 'application/json',
@@ -622,7 +647,7 @@ and open the template in the editor.
 
                 <script>
                     function artikelVoorraadAanpassen(aantal, artikelarray) {
-                       
+
                         var id = artikelarray[1];
                         var prijs = artikelarray[3];
                         var naam = artikelarray[5];
@@ -638,10 +663,10 @@ and open the template in the editor.
                                 "naam": naam,
                                 "prijs": prijs,
                                 "voorraad": voorraad
-                                    
+
                             }),
                             success: function (data, textStatus, jqXHR) {
-                  //              alert('Artikel has been updated');
+                                //              alert('Artikel has been updated');
                                 var table = $('#artikel').dataTable();
                                 table.api().ajax.reload();
                             }});
@@ -652,42 +677,65 @@ and open the template in the editor.
 
                 <script>
                     function  updateBestellingTotaalPrijs(bestellingId) {
+                        var totaalprijs = 0;
+                        var klantid;
+                        $.ajax({
+                            "url": 'http://localhost:8080/workshop3LO/webresources/bestelling/' + bestellingId,
+                            "type": 'GET',
+                            "cache": false,
+                            "dataType": 'json',
+                            "dataSrc": "",
+                            async: false
+
+
+                            ,
+                            success: function (data, textStatus, jqXHR) {
+                                klantid = data.klantidKlant.id.valueOf();
+                             
+
+                            }
+                            });
                         $.ajax({
                             "url": 'http://localhost:8080/workshop3LO/webresources/bestelregel/search/' + bestellingId,
                             "type": 'GET',
                             "cache": false,
                             "dataType": 'json',
-                            "dataSrc": ""
+                            "dataSrc": "",
+                            async: false
 
 
                             ,
                             success: function (data, textStatus, jqXHR) {
-                                var totaalprijs = 0;
+                                
                                 for (var i = 0; i < data.length; i++) {
                                     totaalprijs += data[i].prijs;
 
                                 }
 
-                                var klantid = data[0].bestellingidBestelling.klantidKlant.id.valueOf();
-                                $.ajax({
-                                    type: 'PUT',
-                                    contentType: 'application/json',
-                                    url: 'http://localhost:8080/workshop3LO/webresources/bestelling/' + bestellingId,
-                                    dataType: "json",
-                                    data: JSON.stringify({
-                                        "id": bestellingId,
-                                        "klantidKlant": {"id": klantid},
-                                        "prijs": totaalprijs
+                                }
+                         
+                       }); 
+                    totaalprijs=parseFloat(totaalprijs).toFixed(2); 
+                        $.ajax({
+                            type: 'PUT',
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/workshop3LO/webresources/bestelling/' + bestellingId,
+                            dataType: "json",
+                            async: false,
+                            data: JSON.stringify({
+                                "id": bestellingId,
+                                "klantidKlant": {"id": klantid},
+                                "prijs": totaalprijs
 
 
-                                    }),
-                                    success: function (data, textStatus, jqXHR) {
-                   //                     alert('bestelling has been updated');
-                                        var table = $('#bestelling').dataTable();
-                                        table.api().ajax.reload();
-                                    }});
-
+                            }),
+                            success: function (data, textStatus, jqXHR) {
+                                //                     alert('bestelling has been updated');
+                                var table = $('#bestelling').dataTable();
+                                table.api().ajax.reload();
                             }});
+
+
                     }
                 </script>
             </div>
@@ -701,11 +749,11 @@ and open the template in the editor.
                         <label for="id" ><b>id</b></label>
                         <input id="editid" type="number" value="" name="id" disabled>
 
-<!--                       <label for="old" ><b>oude regel</b></label>-->
+                        <!--                       <label for="old" ><b>oude regel</b></label>-->
                         <input id="oldregel" type="hidden" value="" name="old" disabled>
-                        
+
                         <label for="aantal" ><b>Aantal</b></label>
-                        <input id="editAantal" type="number" placeholder="voer aantal in" name="aantal" required min="0" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
+                        <input id="editAantal" type="number" placeholder="voer aantal in" name="aantal" required min="0" max="9999999" oninvalid="this.setCustomValidity('Voer aantal in ')"  oninput="this.setCustomValidity('')">
 
 
                         <label for="artikel" ><b>Artikel</b></label>
@@ -723,12 +771,12 @@ and open the template in the editor.
                     function validateEditBestelregel() {
                         if (document.getElementById('bestelRegelfrm2').checkValidity()) {
                             var res2 = document.getElementById('editArtikelselect').value.split(" ");
-                            var artikelvoorraad =(Number)(res2[7]);
-                        //   alert(document.getElementById('editAantal').value + ' ' + artikelvoorraad);
+                            var artikelvoorraad = (Number)(res2[7]);
+                            //   alert(document.getElementById('editAantal').value + ' ' + artikelvoorraad);
                             if (document.getElementById('editAantal').value <= artikelvoorraad) {
                                 var artikelarray = artikelVoorraadVerhogen(document.getElementById('oldregel').value);
-                                if (artikelarray[1] === res2[1]){
-                                    res2[7]=(Number)(artikelarray[7]) + (Number)(artikelarray[9])
+                                if (artikelarray[1] === res2[1]) {
+                                    res2[7] = (Number)(artikelarray[7]) + (Number)(artikelarray[9])
                                 }
                                 artikelVoorraadAanpassen(document.getElementById('editAantal').value, res2);
                                 editBestelregelForm(document.getElementById('editid').value, document.getElementById('editAantal').value, document.getElementById('editArtikelselect').value, document.getElementById('editBestellingIdselect').value);
@@ -752,31 +800,30 @@ and open the template in the editor.
                         $('#editid').attr('value', data.id.valueOf());
                         $('#editAantal').attr('value', data.aantal.valueOf());
                         $('#editPrijs').attr('value', data.prijs.valueOf());
-                        $('#oldregel').attr('value', ('artikelId: ' + data.artikelidArtikel.id.valueOf())+ ' naam: ' + data.artikelidArtikel.naam.valueOf()+ ' prijs: ' + data.artikelidArtikel.prijs.valueOf() + ' voorraad ' + data.artikelidArtikel.voorraad.valueOf()+ ' aantal: ' +data.aantal.valueOf()) ;
-                        
-                       $.ajax({
+                        $('#oldregel').attr('value', ('artikelId: ' + data.artikelidArtikel.id.valueOf()) + ' naam: ' + data.artikelidArtikel.naam.valueOf() + ' prijs: ' + data.artikelidArtikel.prijs.valueOf() + ' voorraad ' + data.artikelidArtikel.voorraad.valueOf() + ' aantal: ' + data.aantal.valueOf());
+
+                        $.ajax({
                             type: 'GET',
                             cache: false,
                             contentType: 'application/json',
                             url: 'http://localhost:8080/workshop3LO/webresources/artikel',
                             dataType: "json",
-                            
+
                             success: function (datafeyenoord, textStatus, jqXHR) {
-                                
+
                                 var select = document.getElementById("editArtikelselect");
-                                
+
                                 for (index in datafeyenoord) {
                                     select.options[select.options.length] = new Option('id: ' + datafeyenoord[index].id + ' euro: ' + datafeyenoord[index].prijs + ' naam: ' + datafeyenoord[index].naam + ' voorraad: ' + datafeyenoord[index].voorraad);
                                     if (data.artikelidArtikel.id === datafeyenoord[index].id) {
                                         select.selectedIndex = index;
-                                    }
-                                    else{
+                                    } else {
                                         select.selectedIndex = index;
                                     }
                                 }
 
                             }});
-                        
+
 //                        $('#editArtikelselect').val(data.artikelidArtikel.id + ' euro: ' + data.artikelidArtikel.prijs + ' ' + data.artikelidArtikel.naam);
                         $.ajax({
                             type: 'GET',
@@ -807,8 +854,8 @@ and open the template in the editor.
 
                         var res = editArtikelselect.split(" ");
                         var artikelid = res[1];
-                        var prijs = res[3] * editAantal;
-
+                        
+                         var prijs = parseFloat(res[3] * editAantal).toFixed(2);
                         $.ajax({
                             type: 'PUT',
                             contentType: 'application/json',
@@ -835,8 +882,8 @@ and open the template in the editor.
                 <script>
 
                     function deleteBestelregel(data) {
-                        var artikel = ('artikelId: ' + data.artikelidArtikel.id.valueOf()+ ' naam: ' + data.artikelidArtikel.naam.valueOf()+ ' prijs: ' + data.artikelidArtikel.prijs.valueOf() + ' voorraad ' + data.artikelidArtikel.voorraad.valueOf()+ ' aantal: ' +data.aantal.valueOf());
-                      artikelVoorraadVerhogen(artikel);
+                        var artikel = ('artikelId: ' + data.artikelidArtikel.id.valueOf() + ' naam: ' + data.artikelidArtikel.naam.valueOf() + ' prijs: ' + data.artikelidArtikel.prijs.valueOf() + ' voorraad ' + data.artikelidArtikel.voorraad.valueOf() + ' aantal: ' + data.aantal.valueOf());
+                        artikelVoorraadVerhogen(artikel);
                         var bestellingId = data.bestellingidBestelling.id.valueOf();
 
                         var retVal = confirm("Do you want to continue ?");
@@ -867,7 +914,7 @@ and open the template in the editor.
 
                     }
                 </script>
-                
+
                 <script>
                     function artikelVoorraadVerhogen(artikel) {
                         var artikelarray = artikel.split(" ");
@@ -875,7 +922,7 @@ and open the template in the editor.
                         var prijs = artikelarray[5];
                         var naam = artikelarray[3];
                         var voorraad = (Number)(artikelarray[7]) + (Number)(artikelarray[9]);
-                        
+
                         $.ajax({
                             type: 'PUT',
                             contentType: 'application/json',
@@ -890,7 +937,7 @@ and open the template in the editor.
 
                             }),
                             success: function (data, textStatus, jqXHR) {
-                  //              alert('Artikel has been updated');
+                                //              alert('Artikel has been updated');
                                 var table = $('#artikel').dataTable();
                                 table.api().ajax.reload();
                                 return artikelarray;
@@ -899,7 +946,7 @@ and open the template in the editor.
                     }
 
                 </script>
-                
+
             </div>
         </div>
 
