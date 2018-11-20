@@ -4,10 +4,18 @@
         <script type="text/javascript" src = "../js/jquery-3.3.1.js"></script>
         <script type="text/javascript"
         src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <link rel="stylesheet" href="../css/styles.css" type="text/css">
     </head>
-    <body>
-
-        <form action="LoginServlet" method="post">
+    
+    
+    
+    <body style=" background-color: #0c6120 ">
+        
+         <div align="center" style="color: white">
+             <h1 style="font-size:42px">Welkom bij Boer Piet's Kaaswinkel </h1> 
+            <p style="font-size:36px">Gelieve in te loggen</p> 
+        <div align="center">
+        <form action="LoginServlet" method="post" class="form-container-inlog">
 
             Username: <input type="text" name="user" id="user">
             <br>
@@ -16,8 +24,8 @@
             <button type="button" class="btn" onclick="loginfunction()">login</button>
 
         </form>
-
-
+        </div>
+         </div>
 
         <script> function loginfunction() {
                 var user = document.getElementById('user').value;

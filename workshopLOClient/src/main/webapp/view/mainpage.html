@@ -878,6 +878,7 @@
 
                                     var select = document.getElementById("accountselect");
                                     for (index in data) {
+                                        
                                         select.options[select.options.length] = new Option(data[index].id + ' ' + data[index].username);
                                     }
 
@@ -1847,7 +1848,7 @@
                         <label for="editklantId" ><b>klantId</b></label>
                         <input  id="editklantId" type="number"  disabled><br>
 
-                        <button type="button" class="btn" onclick="">save</button>
+                        <button type="button" class="btn" onclick="validateEditAddress()">save</button>
                         <button type="button" class="btn cancel" onclick="closeAddressEditForm()">Close</button>
                     </form>
                 </div>
