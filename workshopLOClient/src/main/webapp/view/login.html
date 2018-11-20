@@ -1,16 +1,47 @@
 <html>
-<head>
-<title>Login Applikaassie</title>
-</head>
-<body>
+    <head>
+        <title>Login Applikaassie</title>
+        <script type="text/javascript" src = "../js/jquery-3.3.1.js"></script>
+        <script type="text/javascript"
+        src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    </head>
+    <body>
 
-<form action="LoginServlet" method="post">
+        <form action="LoginServlet" method="post">
 
-Username: <input type="text" name="user">
-<br>
-Password: <input type="password" name="pwd">
-<br>
-<input type="submit" value="Login">
-</form>
-</body>
+            Username: <input type="text" name="user" id="user">
+            <br>
+            Password: <input type="password" name="pwd" id="pwd">
+            <br>
+            <button type="button" class="btn" onclick="loginfunction()">login</button>
+
+        </form>
+
+
+
+        <script> function loginfunction() {
+                var user = document.getElementById('user').value;
+                var pwd = document.getElementById('pwd').value;
+                
+                $.ajax({
+                    type: 'POST',
+                    contentType: 'application/json',
+                    url: 'http://localhost:8080/workshop3LO/resources/webSecurity/LoginServlet',
+                    crossDomain: true,
+                    dataType: "JSON",
+                    data: {user: user, pwd: pwd},
+                    success: function (data, textStatus, jqXHR) {
+                        if (data.redirect) {
+                            window.location = data.redirect;
+                            return;
+                        }
+                        
+                    }});
+            }
+        </script>
+
+    </body>
+
+
+
 </html>

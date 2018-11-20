@@ -22,8 +22,13 @@ and open the template in the editor.
 
         <script>
             function getAccountId() {
-                var accountid = 207;
-                return accountid;
+                //var accountid = 207;
+
+                var account = document.cookie;
+                var accountid = account.toString().substring(3);
+                var accountid2 = (Number)(accountid);
+                
+                return accountid2;
             }
         </script>
 
